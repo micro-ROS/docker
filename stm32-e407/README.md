@@ -1,7 +1,7 @@
 # Environment for micro-ROS STM32F4 platform (as a Docker container)
 
 - Target board: OLIMEX STM32-E407
-- Target microcontroller: ?
+- Target microcontroller: STM32F4
 
 Build the container and compile a simple `nsh` aplication for the `OLIMEX STM32-E407` board:
 ```bash
