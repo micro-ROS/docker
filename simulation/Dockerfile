@@ -14,7 +14,7 @@ RUN apt-get install git -y
 
 # Set up related tools
 RUN git clone https://bitbucket.org/nuttx/tools
-RUN cd tools/kconfig-frontends && ./bootstrap && ./configure && make
+RUN cd tools/kconfig-frontends && ./configure && make
 RUN cd tools/kconfig-frontends && make install
 
 # clone the code
