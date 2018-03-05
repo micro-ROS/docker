@@ -157,7 +157,7 @@ Build GCC cross-compiler (BR2_PACKAGE_GCC) \[Y/n/?\] y\r
     6. gcc 4.9.4 (BR2_GCC_VERSION_4_9_4) (NEW)\r
     7. gcc 5.5.0 (BR2_GCC_VERSION_5_5_0) (NEW)\r
     8. gcc 6.4.0 (BR2_GCC_VERSION_6_4_0) (NEW)\r
-    9. gcc 7.2.0 (BR2_GCC_VERSION_7_2_0) (NEW)\r
+    9. gcc 7.3.0 (BR2_GCC_VERSION_7_3_0) (NEW)\r
   choice\[1-9?\]: "
 send -- "\r"
 expect eof
