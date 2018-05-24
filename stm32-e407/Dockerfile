@@ -19,7 +19,6 @@ RUN apt-get install -y build-essential && \
 #########################################################################################
 # Install utils
 #########################################################################################
-#RUN apt-get update --fix-missing
 RUN apt-get install -y git cmake remake vim && \
     apt-get install -y openocd screen libusb-1.0.0-dev
 
@@ -29,7 +28,7 @@ RUN apt-get install -y git cmake remake vim && \
 RUN git clone https://github.com/microROS/NuttX     nuttx
 RUN git clone https://bitbucket.org/nuttx/tools     tools
 RUN git clone https://github.com/microROS/apps      apps
-#RUN git clone https://bitbucket.org/nuttx/buildroot nuttx/buildroot
+RUN git clone https://bitbucket.org/nuttx/buildroot nuttx/buildroot
 
 #########################################################################################
 # Build kconfig-frontends
@@ -41,9 +40,24 @@ RUN cd tools/kconfig-frontends && \
     make install && \
     ldconfig 
 
+#########################################################################################
+# NuttX configuration
+#########################################################################################
+RUN cd nuttx && tools/configure.sh configs/olimex-stm32-e407/micrortps
+
+#########################################################################################
+# Build toolchain
+#########################################################################################
+RUN cd nuttx/buildroot && \
+    cp configs/cortexm3-eabi-defconfig-4.8.5 .defconfig && \ 
+    make defconfig ; exit 0
+RUN cd nuttx/buildroot && make
+ENV PATH="/root/nuttx/buildroot/build_arm_nofpu/staging_dir/bin/":$PATH 
+RUN rm -r nuttx/archives
+RUN rm -r nuttx/buildroot/toolchain_build_arm_nofpu
+
 ##########################################################################################
 ## Build NuttX
 ##########################################################################################
-RUN cd nuttx && tools/configure.sh configs/olimex-stm32-e407/micrortps
 RUN cd nuttx && make
 
