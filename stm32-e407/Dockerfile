@@ -1,72 +1,136 @@
-# A Dockerfile for the micro-ROS simulation environment
+# A Dockerfile for the micro-ROS build environment
 FROM ubuntu:16.04
 WORKDIR /root
 
+RUN apt update --fix-missing
+RUN apt install -y locales lsb-release
+
+RUN locale-gen en_US en_US.UTF-8
+RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+#########################################################################################
+# Install ROS dependencies
+#########################################################################################
+# # Add ROS2 repository.
+RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/ros-latest.list'
+RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 421C365BD9FF1F717815A3895523BAEEB01FA116
+RUN apt update
+
+# Essential dependencies.
+RUN apt install -y \
+        build-essential \
+        cmake \
+        git \
+        python3-colcon-common-extensions \
+        python3-pip \
+        python-rosdep \
+        python3-vcstool \
+        wget
+
+# Testing dependencies.
+RUN python3 -m pip install -U \
+        argcomplete \
+        flake8 \
+        flake8-blind-except \
+        flake8-builtins \
+        flake8-class-newline \
+        flake8-comprehensions \
+        flake8-deprecated \
+        flake8-docstrings \
+        flake8-import-order \
+        flake8-quotes \
+        pytest-repeat \
+        pytest-rerunfailures
+
+# Ubuntu 16.04 extra packages.
+RUN python3 -m pip install -U \
+        pytest \
+        pytest-cov \
+        pytest-runner \
+        setuptools
+
+#########################################################################################
 # Install NuttX dependencies
-RUN apt-get update
-RUN apt-get install libssl-dev libxml2-dev pkg-config picocom screen libusb-1.0-0-dev gcc-arm-none-eabi -y
-RUN apt-get install -y autotools-dev autoconf gperf flex bison libncurses5-dev libtool
-RUN apt-get install python-serial openocd \
-    flex bison libncurses5-dev autoconf texinfo \
-    libftdi-dev libtool zlib1g-dev -y
-RUN apt-get install git -y
+#########################################################################################
+RUN apt install -y \
+        bison \
+        flex \
+        gperf \
+        libgmp-dev \
+        libmpc-dev \
+        libmpfr-dev \
+        libisl-dev \
+        binutils-dev \
+        libelf-dev \
+        libexpat-dev \
+        libz-dev \
+        libncurses-dev \
+        gettext \
+        texinfo \
+        wget \
+        gcc-arm-none-eabi \
+        gdb-arm-none-eabi \
+        openocd \
+        libusb-1.0.0-dev
 
+#########################################################################################
+# Install utils
+#########################################################################################
+RUN apt install -y \
+        remake \
+        vim \
+        screen \
+        ranger
 
-# Set up related tools
-RUN git clone https://bitbucket.org/nuttx/tools
-RUN cd tools/kconfig-frontends && ./configure && make
-RUN cd tools/kconfig-frontends && make install
-# Update libraries
-RUN /sbin/ldconfig -v
+#########################################################################################
+# Clone repositories
+#########################################################################################
+RUN git clone https://bitbucket.com/nuttx/nuttx.git nuttx
+RUN git clone https://bitbucket.org/nuttx/tools.git tools
+RUN git clone https://github.com/microROS/apps.git apps && \
+    cd apps \
+    && git checkout feature/microROS_stm32-e407
 
-# Build the toolchains specifically for the OLIMEX STM32-E407
-# According to the readme, toolchain config similar to stm32f4discovery
-RUN apt-get install expect -y
-RUN git clone https://bitbucket.org/nuttx/buildroot
-# The following error is obtained when using this version:
-    # cfns.gperf:101:1: error: ‘gnu_inline’ attribute present on ‘libc_name_p’
-    # cfns.gperf:26:14: error: but not here
-# RUN cd buildroot && cp configs/cortexm3-eabi-defconfig-4.6.3 .config
-RUN cd buildroot && cp configs/cortexm3-eabi-defconfig-4.8.5 .config
+RUN git clone https://bitbucket.org/nuttx/uclibc.git uclibc
 
-# RUN ls
-# clone the code
-RUN git clone https://github.com/microROS/apps
-RUN git clone https://github.com/microROS/NuttX nuttx
+#########################################################################################
+# Build kconfig-frontends
+#########################################################################################
+RUN cd tools/kconfig-frontends && \
+    ./configure --enable-mconf --disable-nconf --disable-gconf --disable-qconf && \
+    LD_RUN_PATH=/usr/local/lib && \
+    make && \
+    make install && \
+    ldconfig
+
+#########################################################################################
+# Install uclibc
+#########################################################################################
+RUN cd uclibc && \
+    echo -e "Y\nY\nY\nY\n" | ./install.sh ../nuttx
+
+#########################################################################################
+# Install micro-ROS build system
+#########################################################################################
+RUN mkdir -p uros_build_ws/src && \
+    cd uros_build_ws && \
+    wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/feature/repos/repos/mcu/uros_build.repos && \
+    vcs import src < uros_build.repos && \
+    colcon build --symlink-install --cmake-args -DBUILD_TESTING=OFF
+
+#########################################################################################
+# Install micro-ROS
+#########################################################################################
+RUN mkdir -p uros_ws/src && \
+    cd uros_ws && \
+    wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/feature/repos/repos/mcu/uros_mcu.repos && \
+    vcs import src < uros_mcu.repos
+RUN touch uros_ws/src/uros/micro-ROS-demo/COLCON_IGNORE
 
 # select the configuration of the OLIMEX board
-RUN cd nuttx && tools/configure.sh olimex-stm32-e407/nsh
-
-#######################
-# Build toolchain
-#######################
-# copy a script to automate the command "make oldconfig" (interative)
-# the command has been generated by the instruction:
-#             autoexpect make oldconfig
-COPY script.exp /root
-RUN chmod +x /root/script.exp
-# instead of doing this, we'll use a pre-generated script
-# RUN cd buildroot && make oldconfig
-RUN cd buildroot && /root/script.exp
-
-# get dependencies required to build the toolchain
-RUN apt-get install gettext -y wget
-RUN apt-get update && apt-get install -y build-essential bison flex gperf libgmp-dev libmpc-dev libmpfr-dev libisl-dev binutils-dev libelf-dev libexpat-dev
-# Build the toolchain, fix with the paths, seems specific to this board
-RUN mv buildroot nuttx/buildroot
-RUN cd nuttx/buildroot && make
-
-#######################
-# Build a sample application
-#######################
-# # Build tools/mkconfig, yeah weird
-# RUN cd nuttx && make ; exit 0
-# # Build tools/mkversion
-# RUN cd nuttx && make ; exit 0
-# Import the toolchain in the path and make it
-RUN export PATH="/root/nuttx/buildroot/build_arm_nofpu/staging_dir/bin/":$PATH && cd nuttx && make
-
-#######################
-# Install tools for deployment int the board
-#######################
-RUN apt-get update && apt-get install usbutils
+RUN cd nuttx && \
+    tools/configure.sh ../apps/configs/olimex-stm32-e407/uros/
+RUN . ./uros_build_ws/install/local_setup.sh && \
+    cd nuttx && \
+    make
