@@ -90,7 +90,7 @@ RUN git clone https://bitbucket.com/nuttx/nuttx.git nuttx
 RUN git clone https://bitbucket.org/nuttx/tools.git tools
 RUN git clone https://github.com/microROS/apps.git apps && \
     cd apps \
-    && git checkout feature/microROS_stm32-e407
+    && git checkout v0.0.1-alpha
 
 RUN git clone https://bitbucket.org/nuttx/uclibc.git uclibc
 
