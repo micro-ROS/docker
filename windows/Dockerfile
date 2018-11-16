@@ -113,7 +113,7 @@ RUN choco install -y cmake
 
 
 #> Install testing tools like pytest and others
-RUN pip install -U pytest coverage mock
+RUN pip install -U pytest coverage mock pep257 flake8 pydocstyle
 #RUN py -m pip install -U pytest coverage mock
 
 
