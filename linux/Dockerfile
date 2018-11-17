@@ -46,6 +46,13 @@ RUN apt-get install -y libcurl4-openssl-dev libfreetype6-dev libgles2-mesa-dev l
 
 RUN apt-get install -y gdbserver
 
+# Upgrade pip
+RUN pip3 install --upgrade pip
+
+# Upgrade pytest
+RUN pip3 install -U pytest
+
+
 # Install tools
 RUN apt-get -y install valgrind gcovr libssl-dev software-properties-common
 
