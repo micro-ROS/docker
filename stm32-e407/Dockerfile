@@ -115,7 +115,7 @@ RUN cd uclibc && \
 #########################################################################################
 RUN mkdir -p uros_build_ws/src && \
     cd uros_build_ws && \
-    wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/feature/repos/repos/mcu/uros_build.repos && \
+    wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/master/repos/mcu/uros_build.repos && \
     vcs import src < uros_build.repos && \
     colcon build --symlink-install --cmake-args -DBUILD_TESTING=OFF
 
@@ -124,7 +124,7 @@ RUN mkdir -p uros_build_ws/src && \
 #########################################################################################
 RUN mkdir -p uros_ws/src && \
     cd uros_ws && \
-    wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/feature/repos/repos/mcu/uros_mcu.repos && \
+    wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/master/repos/mcu/uros_mcu.repos && \
     vcs import src < uros_mcu.repos
 RUN touch uros_ws/src/uros/micro-ROS-demo/COLCON_IGNORE
 
