@@ -83,7 +83,8 @@ RUN apt install -y  libpcre3 \
                     libogre-1.9-dev \
                     libxrandr-dev \
                     libopencv-dev \
-                    libcurl4-openssl-dev
+                    libcurl4-openssl-dev \
+                    libcurlpp-dev
 
 # Install eigen lib
 RUN wget http://bitbucket.org/eigen/eigen/get/3.3.5.tar.bz2 -O eigen.tar.bz2
