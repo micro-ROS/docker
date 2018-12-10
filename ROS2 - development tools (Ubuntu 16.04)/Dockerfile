@@ -84,7 +84,8 @@ RUN apt install -y  libpcre3 \
                     libxrandr-dev \
                     libopencv-dev \
                     libcurl4-openssl-dev \
-                    libcurlpp-dev
+                    libcurlpp-dev \
+                    gdbserver
 
 # Install eigen lib
 RUN wget http://bitbucket.org/eigen/eigen/get/3.3.5.tar.bz2 -O eigen.tar.bz2
