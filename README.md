@@ -1,6 +1,7 @@
-This repository contains docker-related material to setup, configure and develop
-with [micro-ROS hardware](https://github.com/microROS/hardware). The idea behind
-this respository is to simplify the development process with
-micro-ROS by providing a unified environment based on a Linux container.
+This repository contains docker-related material to setup, configure and develop with [micro-ROS](https://microros.github.io/)
+The docker files are split in folders that depending the target where the software is executed.
+
+For microcontroller related material, please check `Embedded` folder and `Linux` for setting up tools for executing the software at your Linux machine.
+In each target, precompiled examples are provided to getting started easily.
 
 For installing docker, refer to https://www.docker.com/.
