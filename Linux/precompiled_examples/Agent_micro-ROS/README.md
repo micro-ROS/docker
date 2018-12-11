@@ -1,3 +1,3 @@
 # Agent Quick Start
 
-Contains Docker files with ROS 2 workspace and buit-in micro-ROS Agent ready to run at a Linux system.
+This docker image has a ROS2 workspace with a built Micro-ROS agent ready to be run on a Linux system. The purpose of this image is to quickly run a Micro-ROS agent.
