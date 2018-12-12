@@ -1,4 +1,4 @@
-FROM qeyup/ros2_devtools:18.04
+FROM microros/linux:latest
 
 
 # Create work space

@@ -1,4 +1,4 @@
-FROM qeyup/ros2_devtools:latest
+FROM microros/linux:latest
 
 # Create work space
 RUN mkdir -p ~/client_ws/src
