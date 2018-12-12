@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
 # Change work dir
 WORKDIR /root
