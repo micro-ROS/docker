@@ -34,12 +34,11 @@ RUN apt install -y  remake \
 
 
 # Clone nuttx repo
-RUN git clone https://bitbucket.com/nuttx/nuttx.git ~/nuttx
+RUN git clone https://github.com/microROS/NuttX
 
 
 # Clone nuttx apps repo.
-RUN git clone https://github.com/microROS/apps.git ~/apps 
-RUN git -C ~/apps checkout feature/Ubuntu18Update
+RUN git clone https://github.com/microROS/apps.git ~/apps
 
 
 # Clone, Build and install kconfig-frontends repo
