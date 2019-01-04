@@ -1,6 +1,4 @@
 FROM microros/linux:latest
-
-
 # Install essential required for Nuttx complilation
 RUN apt install -y  bison \
                     flex \
@@ -34,12 +32,14 @@ RUN apt install -y  remake \
 
 
 # Clone nuttx repo
-RUN git clone https://bitbucket.com/nuttx/nuttx.git ~/nuttx
+RUN git clone https://github.com/microROS/NuttX.git ~/nuttx 
+
 
 
 # Clone nuttx apps repo.
-RUN git clone https://github.com/microROS/apps.git ~/apps 
-RUN git -C ~/apps checkout feature/Ubuntu18Update
+RUN git clone https://github.com/microROS/apps.git ~/apps
+ 
+
 
 
 # Clone, Build and install kconfig-frontends repo
@@ -55,7 +55,7 @@ RUN git clone https://bitbucket.org/nuttx/uclibc.git ~/uclibc
 RUN (cd ~/uclibc/ && echo -e "Y\nY\nY\nY\n" | ./install.sh ~/nuttx)
 
 
-#--------Here we could split this image in two, tools and build.
+#--------
 
 
 # Download, build and install `Micro-ROS build system`
@@ -74,5 +74,5 @@ RUN sed -i s/"CONFIG_MICRO_XRCEDDS_TRANSPORT=.*"/"CONFIG_MICRO_XRCEDDS_TRANSPORT
 
 
 # Build Nuttx binary
-RUN (cd ~/nuttx && tools/configure.sh ../apps/configs/olimex-stm32-e407/uros/)
-RUN (. ~/uros_build_ws/install/local_setup.sh && cd ~/nuttx && make)
+RUN (cd ~/nuttx && tools/configure.sh ./configs/olimex-stm32-e407/uros/)
+ RUN (. ~/uros_build_ws/install/local_setup.sh && cd ~/nuttx && make)
