@@ -40,7 +40,12 @@ RUN apt install -y  build-essential \
                     python3-pip \
                     python-rosdep \
                     python3-vcstool \
-                    clang-tidy
+                    clang-tidy \
+                    pyqt5-dev \
+                    pyqt5-dev-tools \
+                    cppcheck \
+                    graphviz \
+                    libgraphviz-dev
 
 # Upgrade pip
 RUN python3 -m pip install --upgrade pip
@@ -61,7 +66,10 @@ RUN python3 -m pip install -U   argcomplete \
                                 pytest-rerunfailures \
                                 setuptools \
                                 mock \
-                                git+https://github.com/lark-parser/lark.git@0.7b
+                                git+https://github.com/lark-parser/lark.git@0.7b \
+                                pytest \
+                                pydot \
+                                pygraphviz
 
 # Install asio (For fastrtps)
 RUN apt install --no-install-recommends -y \
