@@ -67,7 +67,6 @@ RUN python3 -m pip install -U   argcomplete \
                                 setuptools \
                                 mock \
                                 git+https://github.com/lark-parser/lark.git@0.7b \
-                                pytest \
                                 pydot \
                                 pygraphviz
 
