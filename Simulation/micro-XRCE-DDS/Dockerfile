@@ -58,8 +58,8 @@ RUN (cd tools/kconfig-frontends && \
 
 # Downloading and installing the custom simulator.
 
-RUN git clone https://github.com/beckus/qemu_stm32.git ~/qemu_stm32
-RUN (cd ~/qemu_stm32 && git submodule update --init dtc && ./configure --extra-cflags="-w" --enable-debug --target-list="arm-softmmu" && make && make install)
+RUN git clone https://github.com/microROS/Simulator ~/Simulator
+RUN (cd ~/Simulator/qemu_stm32 && git submodule update --init dtc && ./configure --extra-cflags="-w" --enable-debug --target-list="arm-softmmu" && make && make install)
 
 # Downloading and installing Micro-XRCE-DDS Agent
 
