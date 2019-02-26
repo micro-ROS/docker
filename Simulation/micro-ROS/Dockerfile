@@ -89,7 +89,7 @@ RUN (. ~/uros_build_ws/install/local_setup.sh && cd ~/nuttx && make)
 
 # Downloading and installing the custom simulator.
 
-RUN git clone https://github.com/microROS/Simulator ~/Simulator
+RUN git clone https://github.com/microROS/Micro-ROS-simulator ~/Simulator
 RUN (cd ~/Simulator/qemu_stm32  && ./configure --extra-cflags="-w" --enable-debug --target-list="arm-softmmu" && make && make install)
 
 
