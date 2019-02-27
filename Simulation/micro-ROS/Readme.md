@@ -31,7 +31,7 @@ cd nuttx
 qemu-system-arm -M stm32-f103c8 -serial pty -serial pty -kernel nuttx.bin
 ```
 
-if successful, you should see something like this:
+if success, you should see something like this:
 
 ```bash
 root@6dd5e89da46e:~/nuttx# qemu-system-arm -M stm32-f103c8 -serial pty -serial pty -kernel nuttx.bin
