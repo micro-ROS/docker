@@ -11,7 +11,7 @@ There are two options to get the image.
 1. Build your own the image using the docker file:
 
     ```bash
-    docker build -t microxrcedds_sim .
+    docker build -t microros_sim .
     ```
 
 
@@ -20,7 +20,7 @@ There are two options to get the image.
 Access the container with privileges so that we can flash the board from within:
 
 ```bash
-docker run -it -v /dev/bus/usb:/dev/bus/usb --privileged microxrcedds_sim /bin/bash
+docker run -it -v /dev/bus/usb:/dev/bus/usb --privileged microros_sim /bin/bash
 ```
 
  Execute the simulator:
