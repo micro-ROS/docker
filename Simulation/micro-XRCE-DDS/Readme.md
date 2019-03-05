@@ -1,8 +1,8 @@
 # Environment for micro-ROS simulator platform (as a Docker container)
 
-This is a Docker image to set the proper configuration and dependencies to run Qemu emulating a Cortex M3 MCU.
+This is a Docker image that sets the proper configuration and dependencies to run a Micro XRCE-DDS NuttX Client application in an emulated Cortex M3 MCU using Quemu.
 
-This simulation builds NuttX RTOS, micro-XRCE-DDS client example code and micro-XRCE-DDS Agent that sets communication with the agent.
+This example uses NuttX RTOS, micro-XRCE-DDS client example code and micro-XRCE-DDS Agent.
 
 
 ## Build
@@ -16,17 +16,17 @@ Build your own the image using the docker file:
 
 ## Run
 
-> Note: the example explained here works with the [commit a495c65](https://github.com/eProsima/Micro-XRCE-DDS-Agent/commit/a495c65faa964ddc068ac6e1249f17f5c9f92787) of Micro XRCE-DDS Agent and NuttX "nuttx-sim-dev" branch [commit 54b0ca9](https://github.com/microROS/NuttX/commit/54b0ca954ae2a734ebef6d1dec589813bfd026a7) .
+_Note: the example explained here works with the [commit a495c65](https://github.com/eProsima/Micro-XRCE-DDS-Agent/commit/a495c65faa964ddc068ac6e1249f17f5c9f92787) of Micro XRCE-DDS Agent and NuttX "nuttx-sim-dev" branch [commit 54b0ca9](https://github.com/microROS/NuttX/commit/54b0ca954ae2a734ebef6d1dec589813bfd026a7)._
 
 ### Client 1: Micro XRCE-DDS publisher
 
-Open a new terminal and access the container with privileges so that we can flash the board from within:
+Open a new terminal and access the container with privileges so that we can run the binary in simulated board at Quemu:
 
 ```bash
-docker run -it -v /dev/bus/usb:/dev/bus/usb --privileged microXRCEDDS_sim /bin/bash
+docker run -it -v /dev/bus/usb:/dev/bus/usb --privileged microxrcedds_sim /bin/bash
 ```
 
- Execute the simulator:
+ Execute the simulator running the NuttX binary that contains the RTOS and the client application:
 
 ```bash
 # inside the docker container
@@ -34,7 +34,7 @@ cd nuttx
 qemu-system-arm -M stm32-f103c8 -serial pty -serial pty -kernel nuttx.bin
 ```
 
-If success, you should see something like this:
+You should see something like this:
 
 ```bash
 root@6dd5e89da46e:~/nuttx# qemu-system-arm -M stm32-f103c8 -serial pty -serial pty -kernel nuttx.bin
@@ -46,37 +46,36 @@ VNC server running on `127.0.0.1:5900'
 LED Off
 ```
 
-At this point, the simulator is running properly. Now we need to open two auxiliary consoles.
-- In a new terminal, obtain the container ID typing `docker ps`.
-- Find *microxrcedds_sim* and copy the *CONTAINER ID*
-- Type the next command to run an auxiliary  console: `docker exec -it <container_id> /bin/bash`. Make this step twice, so we have two terminals in the same docker.
 
-Qemu creates two serial ports, labeled as "/dev/pts/x", the first one will be attached to the NuttX console and the second port is the auxiliary port of the board, where we are going to type the commands.
+Qemu creates two serial ports, labeled as "/dev/pts/x". The first one is attached to the NuttX Shell, that we are going to use it to launch the client and type the commands. The second port is the auxiliary port, to be used to attach the Agent.
 
-Once we have the client running and the additional terminals to control it, we need a Micro XRCE-DDS Agent to attach to it. This Agent is going to connect to the serial the client has opened to have communications among them. For that purpose, we need another terminal running the docker and attached to the communication serial the client has opened.
+At this point, the simulator is running properly. In a new terminal, obtain the container ID typing `docker ps`. Find *microxrcedds_sim* and copy the *CONTAINER ID*. Type the next command to run an auxiliary  console: `docker exec -it <container_id> /bin/bash`.
 
-+ Execute again  `docker exec -it <container_id> /bin/bash` in the new terminal.
+
+The micro-ROS Agent is going to connect to the serial the simulator has opened to have communications among them. Now follow the next steps to execute the agent:
+
 + Access to the folder where the Agent is compiled, using `~/micro-XRCE-DDS-agent/build`.
 + Execute `./MicroXRCEAgent serial /dev/pts/<tty_number>` command, where <tty_number> is the second tty printed when the NuttX binary is executed. For example:
 
 ```
 (process:180): GLib-WARNING **: 11:28:11.162: ../../../../glib/gmem.c:489: custom memory allocation vtable not supported
 char device redirected to /dev/pts/1 (label serial0)
-char device redirected to /dev/pts/5 (label serial1)
+char device redirected to /dev/pts/2 (label serial1)
 ```
 
-In this case `/dev/pts/5` is the serial where the client and the agent will talk, so the agent's serial needs to be attached there. You should see the next once you launch the Agent:
+In this case `/dev/pts/2` is the serial where the client and the agent will talk, so the agent's serial needs to be attached there. You should see the next once you launch the Agent:
 
 ```
-root@2bdee009f1b1:~/micro-XRCE-DDS-agent/build# ./5
+root@2bdee009f1b1:~/micro-XRCE-DDS-agent/build# ././MicroXRCEAgent serial /dev/pts/2
 Serial agent initialization... OK
 Enter 'q' for exit
 ```
 
-Now we need another execution of the docker attached to the NuttX debug serial session. This session will be used to launch the client inside NuttX.
+Now we need another execution of the docker attached to the NuttX Shell serial session. This session will be used to launch the client inside NuttX.
 
 + Execute again `docker exec -it <container_id> /bin/bash` in a new terminal.
 + Open a minicom session attached to the first serial session, following the previous example, `docker exec -it <container_id> /bin/bash`.
++ Open a `minicom` terminal attached to the first serial created by the emulator, in this case, `minicom -D /dev/pts/1`
 + Hit enter a couple of times, you should see NuttX NSH shell prompt, type `?` to see if you have the client binary:
 
 ```
@@ -102,7 +101,7 @@ nsh> ls /dev
  ttyS0                                                                          
  ttyS1
  ```
- And launch the client attached to the second serial, using `client --serial /dev/ttyS1` command. The output should be the next:
+ And launch the client, attaching it to the second serial where the Agent is listening, using `client --serial /dev/ttyS1` command. The output should be the next:
 
  ```
  nsh> client --serial /dev/ttyS1                                                 
@@ -158,11 +157,7 @@ Status: OK
 <<= << [12]: 81 00 80 00 0A 01 04 00 01 00 00 00 >>
 ```
 
-Now, create a topic `create_topic 1 1`.The output should be the next:
-
-```
-
-```
+Now, create a topic `create_topic 1 1`.
 
 Now, create publisher `create_publisher 1 1`, and a data writer, `create_datawriter 1 1`.
 
@@ -190,6 +185,7 @@ RTPS Participant matched 1.f.0.2.cb.0.0.0.0.0.0.0|0.0.1.c1
 
 + `create_subscriber 1 1`
 + `create_datareader 1 1`
+
 And finally, request data to the publisher:
 
 + `request_data 1 128 5`
