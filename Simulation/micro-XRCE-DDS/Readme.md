@@ -1,23 +1,26 @@
 # Environment for micro-ROS simulator platform (as a Docker container)
 
 This is a Docker image to set the proper configuration and dependencies to run Qemu emulating a Cortex M3 MCU.
-In this simulation we have NuttX+micro-XRCE-DDS client and micro-XRCE-DDS Agent.
+
+This simulation builds NuttX RTOS, micro-XRCE-DDS client example code and micro-XRCE-DDS Agent that sets communication with the agent.
 
 
 ## Build
 
-There are two options to get the image.
-
-1. Build your own the image using the docker file:
+Build your own the image using the docker file:
 
     ```bash
-    docker build -t microXRCEDDS_sim .
+    docker build -t microxrcedds_sim .
     ```
 
 
 ## Run
 
-Access the container with privileges so that we can flash the board from within:
+> Note: the example explained here works with the [commit a495c65](https://github.com/eProsima/Micro-XRCE-DDS-Agent/commit/a495c65faa964ddc068ac6e1249f17f5c9f92787) of Micro XRCE-DDS Agent and NuttX "nuttx-sim-dev" branch [commit 54b0ca9](https://github.com/microROS/NuttX/commit/54b0ca954ae2a734ebef6d1dec589813bfd026a7) .
+
+### Client 1: Micro XRCE-DDS publisher
+
+Open a new terminal and access the container with privileges so that we can flash the board from within:
 
 ```bash
 docker run -it -v /dev/bus/usb:/dev/bus/usb --privileged microXRCEDDS_sim /bin/bash
@@ -41,12 +44,168 @@ char device redirected to /dev/pts/1 (label serial0)
 char device redirected to /dev/pts/2 (label serial1)
 VNC server running on `127.0.0.1:5900'
 LED Off
+```
+
+At this point, the simulator is running properly. Now we need to open two auxiliary consoles.
+- In a new terminal, obtain the container ID typing `docker ps`.
+- Find *microxrcedds_sim* and copy the *CONTAINER ID*
+- Type the next command to run an auxiliary  console: `docker exec -it <container_id> /bin/bash`. Make this step twice, so we have two terminals in the same docker.
+
+Qemu creates two serial ports, labeled as "/dev/pts/x", the first one will be attached to the NuttX console and the second port is the auxiliary port of the board, where we are going to type the commands.
+
+Once we have the client running and the additional terminals to control it, we need a Micro XRCE-DDS Agent to attach to it. This Agent is going to connect to the serial the client has opened to have communications among them. For that purpose, we need another terminal running the docker and attached to the communication serial the client has opened.
+
++ Execute again  `docker exec -it <container_id> /bin/bash` in the new terminal.
++ Access to the folder where the Agent is compiled, using `~/micro-XRCE-DDS-agent/build`.
++ Execute `./MicroXRCEAgent serial /dev/pts/<tty_number>` command, where <tty_number> is the second tty printed when the NuttX binary is executed. For example:
+
+```
+(process:180): GLib-WARNING **: 11:28:11.162: ../../../../glib/gmem.c:489: custom memory allocation vtable not supported
+char device redirected to /dev/pts/1 (label serial0)
+char device redirected to /dev/pts/5 (label serial1)
+```
+
+In this case `/dev/pts/5` is the serial where the client and the agent will talk, so the agent's serial needs to be attached there. You should see the next once you launch the Agent:
+
+```
+root@2bdee009f1b1:~/micro-XRCE-DDS-agent/build# ./5
+Serial agent initialization... OK
+Enter 'q' for exit
+```
+
+Now we need another execution of the docker attached to the NuttX debug serial session. This session will be used to launch the client inside NuttX.
+
++ Execute again `docker exec -it <container_id> /bin/bash` in a new terminal.
++ Open a minicom session attached to the first serial session, following the previous example, `docker exec -it <container_id> /bin/bash`.
++ Hit enter a couple of times, you should see NuttX NSH shell prompt, type `?` to see if you have the client binary:
+
+```
+nsh> ?
+help usage:  help [-v] [<cmd>]
+
+  [           dd          help        mh          sleep       xd          
+  ?           echo        hexdump     mw          test        
+  cat         exec        kill        pwd         true        
+  cd          exit        ls          set         unset       
+  cp          false       mb          sh          usleep      
+
+Builtin Apps:
+  client
+```
+Chek the available serial ports:
+
+```
+nsh> ls /dev
+/dev:
+ console                                                                        
+ null                                                                           
+ ttyS0                                                                          
+ ttyS1
+ ```
+ And launch the client attached to the second serial, using `client --serial /dev/ttyS1` command. The output should be the next:
+
+ ```
+ nsh> client --serial /dev/ttyS1                                                 
+ Serial mode => dev: /dev/ttyS1                                                  
+ Running Shapes Demo Client...
+ ```
+
+### Client 2: Micro XRCE-DDS subscriber
+
+Repeat the steps described at the publisher.
+
+### Creating the publisher and subscriber
+
+_Note: the instructions have been taken from eProsima [documentation](https://micro-xrce-dds.readthedocs.io/en/latest/shapes_demo.html)_
+
+Now that we have two Micro XRCE-DDS clients running, with one terminal attached to the NuttX shell and the Agent connected to the second serial, we are able to set the function of each one.
+
+#### Publisher
+
+Take one of the clients NuttX Shell session and type the next command: `create_session`. The output should be the next:
+
+```
+=>>  34: (key: AA BB CC DD | n: 0 |  0) [CREATE CLIENT | req: 0x0001 | obj: 0xF
+=>> << [34]: 80 00 00 00 00 01 1A 00 00 01 FF FE 58 52 43 45 01 00 01 0F 1D 05 >
+=>>  34: (key: AA BB CC DD | n: 0 |  0) [CREATE CLIENT | req: 0x0001 | obj: 0xF
+=>> << [34]: 80 00 00 00 00 01 1A 00 00 01 FF FE 58 52 43 45 01 00 01 0F 1D 05 >
+<<=  33: (key: AA BB CC DD | n: 0 |  0) [STATUS AGENT | req: 0x0001 | obj: 0xFF
+<<= << [33]: 81 00 00 00 04 01 19 00 00 01 FF FE 00 00 58 52 43 45 01 00 01 0F >
+Status: OK      
+```
+
+Now, type the command `create_participant 1`.The output should be the next:
+
+```
+<<=  33: (key: AA BB CC DD | n: 0 |  0) [STATUS AGENT | req: 0x0001 | obj: 0xFF
+<<= << [33]: 81 00 00 00 04 01 19 00 00 01 FF FE 00 00 58 52 43 45 01 00 01 0F >
+=>>  48: (key: AA BB CC DD | r:80 |  0) [CREATE |   | req: 0x000A | obj: 0x0011
+=>> << [48]: 81 80 00 00 01 01 28 00 00 0A 00 11 01 01 00 00 19 00 00 00 64 65 >
+=>>  12: (key: AA BB CC DD | n:80 |  0) [HEARTBEAT | first: 0 | last: 0] t: 988
+=>> << [12]: 81 00 80 00 0B 01 04 00 00 00 00 00 >>                             
+<<=  14: (key: AA BB CC DD | r:80 |  0) [STATUS | req: 0x000A | obj: 0x0011 | O
+<<= << [14]: 81 80 00 00 05 01 06 00 00 0A 00 11 00 00 >>                       
+Status: OK                                                                      
+=>>  12: (key: AA BB CC DD | n:80 |  0) [ACKNACK | seq_num: 1 | bitmap: 0000000
+=>> << [12]: 81 00 80 00 0A 01 04 00 01 00 00 00 >>                             
+=>>  12: (key: AA BB CC DD | n:80 |  0) [HEARTBEAT | first: 0 | last: 0] t: 990
+=>> << [12]: 81 00 80 00 0B 01 04 00 00 00 00 00 >>                             
+<<=  12: (key: AA BB CC DD | n:80 |  0) [ACKNACK | seq_num: 1 | bitmap: 0000000
+<<= << [12]: 81 00 80 00 0A 01 04 00 01 00 00 00 >>                             
+<<=  12: (key: AA BB CC DD | n:80 |  0) [ACKNACK | seq_num: 1 | bitmap: 0000000
+<<= << [12]: 81 00 80 00 0A 01 04 00 01 00 00 00 >>                             
+<<=  12: (key: AA BB CC DD | n:80 |  0) [ACKNACK | seq_num: 1 | bitmap: 0000000
+<<= << [12]: 81 00 80 00 0A 01 04 00 01 00 00 00 >>
+```
+
+Now, create a topic `create_topic 1 1`.The output should be the next:
 
 ```
 
-At this point, the simulator is running properly. You need to open two auxiliary consoles.
-Follow the next steps:
-- Obtain the container ID typing ``docker ps``.
-- Find *microXRCEDDS_sim* and copy the *CONTAINER ID*
-- Type the next command to run an auxilary  console: ``docker exec -it <container_id> /bin/bash ``
-- Qemu creates two serial port "/dev/pts/x". The first one will be the NuttX console and the second port is the auxilary port of the board.
+```
+
+Now, create publisher `create_publisher 1 1`, and a data writer, `create_datawriter 1 1`.
+
+#### Subscriber
+
+Once we have the publisher working , we need to attach a subscriber to it, using the Micro XRCE-DDS Agent.
+
+First run in this client, the NuttX application of the client:
+```
+nsh> client --serial /dev/ttyS1
+Serial mode => dev: /dev/ttyS1
+Running Shapes Demo Client...                                                   
+```
+
+Now that the client is running, use the next commands to attach to the client that is going to publish data:
+
++ `create_session`
++ `create_participant 1`
+
+At this point, you should see in the terminal of both Agents that they have matched:
+
+```
+RTPS Participant matched 1.f.0.2.cb.0.0.0.0.0.0.0|0.0.1.c1
+```
+
++ `create_subscriber 1 1`
++ `create_datareader 1 1`
+And finally, request data to the publisher:
+
++ `request_data 1 128 5`
+
+#### Publish data
+
+Now the subscriber is listening and the Agents are matched, publish data using the next command: `write_data 1 128 200 200 40 BLUE`
+
+In the subscriber terminal, you should see how it receives the data:
+
+```
+Receiving... [SHAPE_TYPE | color: BLUE | x: 200 | y: 200 | size: 40]            
+=>>  12: (key: AA BB CC DD | n:80 |  0) [ACKNACK | seq_num: 5 | bitmap: 0000000
+=>> << [12]: 81 00 80 00 0A 01 04 00 05 00 00 00 >>                             
+<<=  12: (key: AA BB CC DD | n:80 |  0) [HEARTBEAT | first: 4 | last: 4] t: 551
+<<= << [12]: 81 00 80 00 0B 01 04 00 04 00 04 00 >>                             
+=>>  12: (key: AA BB CC DD | n:80 |  0) [ACKNACK | seq_num: 5 | bitmap: 0000000
+=>> << [12]: 81 00 80 00 0A 01 04 00 05 00 00 00 >>
+```
