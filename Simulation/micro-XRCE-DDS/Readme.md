@@ -31,23 +31,29 @@ docker run -it -v /dev/bus/usb:/dev/bus/usb --privileged microxrcedds_sim /bin/b
 ```bash
 # inside the docker container
 cd nuttx
-qemu-system-arm -M stm32-f103c8 -serial pty -serial pty -kernel nuttx.bin
+qemu-system-arm -M stm32-f103c8 -serial pty -serial tcp::7777,server -kernel nuttx.bin
 ```
 
 You should see something like this:
 
 ```bash
-root@6dd5e89da46e:~/nuttx# qemu-system-arm -M stm32-f103c8 -serial pty -serial pty -kernel nuttx.bin
+root@80b9715bedfe:~/nuttx# qemu-system-arm -M stm32-f103c8 -serial pty -serial tcp::7777,server -kernel nuttx.bin
 
-(process:69): GLib-WARNING **: 17:15:28.972: ../../../../glib/gmem.c:489: custom memory allocation vtable not supported
-char device redirected to /dev/pts/1 (label serial0)
-char device redirected to /dev/pts/2 (label serial1)
+(process:118): GLib-WARNING **: 17:19:54.688: ../../../../glib/gmem.c:489: custom memory allocation vtable not supported
+char device redirected to /dev/pts/7 (label serial0)
+QEMU waiting for connection on: tcp:0.0.0.0:7777,server
 VNC server running on `127.0.0.1:5900'
 LED Off
+
 ```
 
 
-Qemu creates two serial ports, labeled as "/dev/pts/x". The first one is attached to the NuttX Shell, that we are going to use it to launch the client and type the commands. The second port is the auxiliary port, to be used to attach the Agent.
+Qemu creates one serial port, labeled as "/dev/pts/x".This serial port is the auxiliary port, to be used to attach the Agent. The TCP server which have 0.0.0.0 IP and is attached to the port 7777 handles the console.
+(If you want to use another Qemu simulation in the same machine you should give another port number I.E. 8888).
+To access to the console, just use an utility like ``Netcat``. For this app, the command to execute should be:
+```bash
+netcat 0.0.0.0 7777
+```
 
 At this point, the simulator is running properly. In a new terminal, obtain the container ID typing `docker ps`. Find *microxrcedds_sim* and copy the *CONTAINER ID*. Type the next command to run an auxiliary  console: `docker exec -it <container_id> /bin/bash`.
 
@@ -58,15 +64,18 @@ The micro-ROS Agent is going to connect to the serial the simulator has opened t
 + Execute `./MicroXRCEAgent serial /dev/pts/<tty_number>` command, where <tty_number> is the second tty printed when the NuttX binary is executed. For example:
 
 ```
-(process:180): GLib-WARNING **: 11:28:11.162: ../../../../glib/gmem.c:489: custom memory allocation vtable not supported
-char device redirected to /dev/pts/1 (label serial0)
-char device redirected to /dev/pts/2 (label serial1)
+(process:118): GLib-WARNING **: 17:19:54.688: ../../../../glib/gmem.c:489: custom memory allocation vtable not supported
+char device redirected to /dev/pts/7 (label serial0)
+QEMU waiting for connection on: tcp:0.0.0.0:7777,server
+VNC server running on `127.0.0.1:5900'
+LED Off
+
 ```
 
-In this case `/dev/pts/2` is the serial where the client and the agent will talk, so the agent's serial needs to be attached there. You should see the next once you launch the Agent:
+In this case `/dev/pts/7` is the serial where the client and the agent will talk, so the agent's serial needs to be attached there. You should see the next once you launch the Agent:
 
 ```
-root@2bdee009f1b1:~/micro-XRCE-DDS-agent/build# ././MicroXRCEAgent serial /dev/pts/2
+root@2bdee009f1b1:~/micro-XRCE-DDS-agent/build# ././MicroXRCEAgent serial /dev/pts/7
 Serial agent initialization... OK
 Enter 'q' for exit
 ```
