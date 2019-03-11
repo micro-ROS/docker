@@ -18,14 +18,14 @@ RUN apt install -y  wget \
                     software-properties-common
 
 # Add ROS2 repo key
-RUN wget http://repo.ros2.org/repos.key 
-RUN apt-key add repos.key 
-RUN rm repos.key 
+RUN wget http://repo.ros2.org/repos.key
+RUN apt-key add repos.key
+RUN rm repos.key
 RUN sh -c 'echo "deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/main `lsb_release -cs` main" > /etc/apt/sources.list.d/ros2-latest.list'
 
 # Configure locale
-RUN locale-gen en_US en_US.UTF-8 
-RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 
+RUN locale-gen en_US en_US.UTF-8
+RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
 ENV LANG='en_US.UTF-8'
 ENV LANGUAGE='en_US:en'
 ENV LC_ALL='en_US.UTF-8'
@@ -40,7 +40,13 @@ RUN apt install -y  build-essential \
                     python3-pip \
                     python-rosdep \
                     python3-vcstool \
-                    clang-tidy
+                    clang \
+                    clang-tidy \
+                    pyqt5-dev \
+                    pyqt5-dev-tools \
+                    cppcheck \
+                    graphviz \
+                    libgraphviz-dev
 
 # Upgrade pip
 RUN python3 -m pip install --upgrade pip
@@ -61,7 +67,9 @@ RUN python3 -m pip install -U   argcomplete \
                                 pytest-rerunfailures \
                                 setuptools \
                                 mock \
-                                git+https://github.com/lark-parser/lark.git@0.7b
+                                git+https://github.com/lark-parser/lark.git@0.7b \
+                                pydot \
+                                pygraphviz
 
 # Install asio (For fastrtps)
 RUN apt install --no-install-recommends -y \
