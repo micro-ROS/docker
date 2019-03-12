@@ -34,7 +34,8 @@ RUN apt install -y  bison \
 		    libpixman-1-dev \
 		    libpython-dev \
 		    virtualenv \
-		    libfdt-dev
+		    libfdt-dev \
+		    netcat
 
 
 # Install utils and tools.
