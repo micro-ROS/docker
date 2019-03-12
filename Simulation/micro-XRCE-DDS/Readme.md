@@ -84,7 +84,7 @@ Now we need another execution of the docker attached to the NuttX Shell serial s
 
 + Execute again `docker exec -it <container_id> /bin/bash` in a new terminal.
 + Open a minicom session attached to the first serial session, following the previous example, `docker exec -it <container_id> /bin/bash`.
-+ Open a `minicom` terminal attached to the first serial created by the emulator, in this case, `minicom -D /dev/pts/1`
++ Open a `netcat tcp listener` to opent the terminal attached to the serial created by the emulator, in this case, `netcat 0.0.0.0 7777`
 + Hit enter a couple of times, you should see NuttX NSH shell prompt, type `?` to see if you have the client binary:
 
 ```
@@ -120,7 +120,8 @@ nsh> ls /dev
 
 ### Client 2: Micro XRCE-DDS subscriber
 
-Repeat the steps described at the publisher.
+Repeat the steps described at the publisher. You need to change the port of the Qemu TCP server, in the next command you can see an example:
+`qemu-system-arm -M stm32-f103c8 -serial pty -serial tcp::8888,server -kernel nuttx.bin`
 
 ### Creating the publisher and subscriber
 
