@@ -47,7 +47,7 @@ RUN apt install -y  remake \
 		    nano \
                     minicom
 
-RUN git clone -b nuttx-sim-dev  https://github.com/microROS/NuttX.git ~/nuttx 
+RUN git clone https://github.com/microROS/NuttX.git ~/nuttx 
 
 
 RUN git clone  https://github.com/microROS/apps.git ~/apps
@@ -68,7 +68,7 @@ RUN git clone https://github.com/eProsima/micro-XRCE-DDS-agent.git
 RUN (cd micro-XRCE-DDS-agent && mkdir build && cd build && cmake -DTHIRDPARTY=ON .. && make && make install && ldconfig /usr/local/lib/ )
 
 # Compiling NuttX
-RUN (cd nuttx && ./tools/configure.sh stm32f103-minimum/microxrcedds && make)
+RUN (cd nuttx && ./tools/configure.sh microros_sim/microxrcedds && make)
 
 
 

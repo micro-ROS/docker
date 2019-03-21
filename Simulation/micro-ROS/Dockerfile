@@ -48,7 +48,7 @@ RUN apt install -y  remake \
 
 
 # Clone nuttx repo
-RUN git clone -b nuttx-sim-dev https://github.com/microROS/NuttX.git ~/nuttx 
+RUN git clone https://github.com/microROS/NuttX.git ~/nuttx 
 
 
 # Clone nuttx apps repo.
@@ -84,7 +84,7 @@ RUN sed -i s/"CONFIG_MICRO_XRCEDDS_TRANSPORT=.*"/"CONFIG_MICRO_XRCEDDS_TRANSPORT
 
 
 # Build Nuttx binary
-RUN (cd ~/nuttx && tools/configure.sh ./configs/stm32f103-minimum/uros/)
+RUN (cd ~/nuttx && tools/configure.sh ./configs/microros_sim/microros/)
 RUN (. ~/uros_build_ws/install/local_setup.sh && cd ~/nuttx && make)
 
 # Downloading and installing the custom simulator.
