@@ -104,8 +104,5 @@ RUN rm eigen eigen.tar.bz2 -rf
 #--------
 
 # Install java (For Jenkins)
-RUN (add-apt-repository -y ppa:webupd8team/java && apt -y update && \
-    echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections && \
-    echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections && \
-    apt -y install oracle-java8-installer)
-ENV JAVA_HOME "/usr/lib/jvm/java-8-oracle/"
+RUN apt install -y openjdk-8-jdk
+ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64/"
