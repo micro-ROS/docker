@@ -5,7 +5,7 @@ FROM microros/linux:latest
 RUN mkdir -p ~/agent_ws/src
 
 # Import ros packages
-RUN wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/feature/doc_restructure_Installation/Installation/repos/agent_minimum.repos -O ~/agent_ws/micro_ros.repos
+RUN wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-doc/master/repos/agent_minimum.repos -O ~/agent_ws/micro_ros.repos
 RUN vcs import ~/agent_ws/src < ~/agent_ws/micro_ros.repos
 
 # Build Agent
