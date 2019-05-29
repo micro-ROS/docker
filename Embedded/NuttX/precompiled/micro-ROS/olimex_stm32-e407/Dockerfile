@@ -1,4 +1,4 @@
-FROM microros/linux:latest
+FROM microros_linux:latest
 # Install essential required for Nuttx complilation
 RUN apt install -y  bison \
                     flex \
@@ -32,13 +32,14 @@ RUN apt install -y  remake \
 
 
 # Clone nuttx repo
-RUN git clone https://github.com/microROS/NuttX.git ~/nuttx 
+RUN git clone https://github.com/micro-ROS/NuttX.git --branch v0.0.2-alpha ~/nuttx 
+
 
 
 
 # Clone nuttx apps repo.
-RUN git clone https://github.com/microROS/apps.git ~/apps
- 
+RUN git clone https://github.com/micro-ROS/apps.git --branch v0.0.3-alpha ~/apps
+
 
 
 
