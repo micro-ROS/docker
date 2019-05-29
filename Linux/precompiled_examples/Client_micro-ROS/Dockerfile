@@ -4,7 +4,8 @@ FROM microros/linux:latest
 RUN mkdir -p ~/client_ws/src
 
 # Import ros packages
-RUN wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/feature/doc_restructure_Installation/Installation/repos/client_minimum.repos -O ~/client_ws/micro_ros.repos
+RUN wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-doc/master/repos/client_minimum.repos -O ~/client_ws/micro_ros.repos
+
 RUN vcs import ~/client_ws/src < ~/client_ws/micro_ros.repos
 
 # Build CLient
