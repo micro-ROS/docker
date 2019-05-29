@@ -1,5 +1,6 @@
 FROM microros/linux:latest
 
+RUN apt update
 
 # Install essential required for Nuttx complilation
 RUN apt install -y  bison \
