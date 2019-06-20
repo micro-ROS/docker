@@ -32,15 +32,13 @@ RUN apt install -y  remake \
 
 
 # Clone nuttx repo
-RUN git clone https://github.com/micro-ROS/NuttX.git --branch v0.0.2-alpha ~/nuttx 
-
-
+RUN git clone https://github.com/micro-ROS/NuttX.git  ~/nuttx 
+RUN cd ~/nuttx && git checkout tags/v0.0.2-alpha
 
 
 # Clone nuttx apps repo.
-RUN git clone https://github.com/micro-ROS/apps.git --branch v0.0.3-alpha ~/apps
-
-
+RUN git clone https://github.com/micro-ROS/apps.git  ~/apps
+RUN cd ~/apps && git checkout tags/v0.0.3-alpha 
 
 
 # Clone, Build and install kconfig-frontends repo
