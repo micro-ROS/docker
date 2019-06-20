@@ -23,7 +23,7 @@ There are two options to get the image.
 
 1. Pull the image from DockerHub.
     ```bash
-    docker pull microros/stm32-e407
+    docker pull microros_stm32f4
     ```
 
 ## Run
@@ -31,7 +31,7 @@ There are two options to get the image.
 Access the container with privileges so that we can flash the board from within:
 
 ```bash
-docker run -it -v /dev/bus/usb:/dev/bus/usb --privileged microros/stm32-e407 /bin/bash
+docker run -it -v /dev/bus/usb:/dev/bus/usb --privileged microros_stm32f4  /bin/bash
 ```
 
  Flash the board:
