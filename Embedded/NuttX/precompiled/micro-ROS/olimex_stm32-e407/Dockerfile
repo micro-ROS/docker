@@ -1,4 +1,4 @@
-FROM microros_linux:latest
+FROM microros/linux:latest
 # Install essential required for Nuttx complilation
 RUN apt install -y  bison \
                     flex \
