@@ -12,12 +12,39 @@ Avaiable images are listed below:
 | micro-ROS-Agent | Image containing a pre-compiled micro-ROS-Agent, ready to use as standalone application |
 | micro-ROS-demos | Contains precompiled micro-ROS-demos, ready to use to view micro-ROS funcionality |
 | micro-ROS-firmware | Contains a firmware ws ready to configure and build micro-ROS |
-|   micro-ROS-Olimex-NuttX | Contains a ready to flash example for  Olimex STM32 E407 |
+| micro-ROS-Olimex-NuttX | Contains a ready to flash example for  Olimex STM32 E407 |
+
+Image hiearchy
+
+Base
+|-- micro-ros-agent
+|-- micro-ros-demos
+|-- firmware
+    |-- micro-ROS-Olimex-NuttX
+
 
 ## Pre-requisite
 
 You need to have docker in your system.
 For installing docker, refer to https://www.docker.com/.
+
+## Automated builds
+
+These Docker files are used for automatically create images on Docker Hub.
+These builds are tagged as the ROS 2 version they will be compatible with: eg. crystal, dashing...
+The latest tag will be always the latest release of ROS 2.
+
+These automatic builds has direct relation with the conten of the micro-ROS repositories:
+
+| Image | Triggers |
+|-------|----------|
+| Base | micro-ROS/micro-ROS-build |
+| Firmware | micro-ROS/apps micro-ROS/NuttX |
+| micro-ROS-Agent | |
+| micro-ROS-Olimex-NuttX |  | 
+
+Apart from gihub repositoriesi changes, a build is triggered whenever the base image is updated on Docker Hub.
+Base images are specified in the FROM: directive in the Dockerfile.
 
 ## Status
 
