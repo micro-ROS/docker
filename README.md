@@ -79,7 +79,7 @@ The currently avaiable examples are:
 * string_subscriber_c & string_subscriber_cpp
 * rad0_actuator_c, rad0_altitude_sensor_c, rad0_control_cpp & rad0_display_c
 
-### micro-ros-olimex-nuttx
+#### micro-ros-olimex-nuttx
 
 This image provides you with a ready-to-flash firmware for Olimex-stm32-e407 with demos embedded on it.
 To flash your device you need to map your host machine devices to the Docker container
