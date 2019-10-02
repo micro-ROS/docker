@@ -1,8 +1,8 @@
 # Docker
 
 This repository contains docker-related material to setup, configure and develop with [micro-ROS](https://microros.github.io/)
-These set of dockerfiles provide ready-to-use environments and applications.
-The docker images can be found in [dockerhub](https://hub.docker.com/u/microros).
+These set of Dockerfiles provide ready-to-use environments and applications.
+The Docker images are available in [dockerhub](https://hub.docker.com/u/microros).
 
 Avaiable images are listed below:
 
@@ -19,52 +19,58 @@ Avaiable images are listed below:
 ## Pre-requisite
 
 You need to have docker in your system.
-For installing docker, refer to https://www.docker.com/.
+For installing docker, refer to the official documentation at https://www.docker.com/.
 
 ## Usage
 
-To get a image you use `docker pull` command:
+To get an image, you use `docker pull` command:
 
-* eg: ```docker pull microros/base```
+* e.g. ```docker pull microros/base```
 
-You can select the tag to use apending `:tag` to the image name
+You can select the tag to use appending `:tag` to the image name
 
-* eg: ```docker pull microros/base:crystal```
+* e.g. ```docker pull microros/base:crystal```
 
-Once you have the image locally to start it use `docker run`
+Once you have the image locally, to start it use `docker run`
 
-* eg: ```docker run -it microros/micro-ros-agent```
+* e.g. ```docker run -it microros/micro-ros-agent```
 
-`-it` allocates a pseudo-TTY for you and keeps sdin listening.
+`-it` allocates a pseudo-TTY for you and keeps stdin listening.
 Another used command is `-v` to map local files with docker container ones.
+`-v` is useful in case you may want to flash boards from within a Docker container.
 
-**base image**
+#### base image
 
-The base image is not intended to be run by the user. It is the base for the rest of the containers.
-It contains the basic micro-ROS setup tools and dependencies.
+It is the base for the rest of the containers.
+It contains the necessary micro-ROS setup tools and dependencies.
+From this image, you can start any development targeting micro-ROS.
 
-**firmware image**
+#### firmware image
 
-This image as the base one, it is used as starting point to those images using firmware. This image contains a firmware workspace setup and dependencies.
+This image as the base one, it is used as a starting point to those images using firmware.
+This image contains a firmware workspace setup and dependencies.
 
-**micro-ros-agent**
 
-This image purpose is to be run as a stand alone application. It includes an installation of the ROS 2 version selected byt the tag along with a micro-ROS-Agent.
+#### micro-ros-agent
+
+This image purpose serves as a stand-alone application.
+It includes installation of the ROS 2 version selected by the tag along with a micro-ROS-Agent.
 The entry point of this image is directly the micro-ROS-Agent, so upon execution of `docker run` you will be facing micro-ROS-Agent command line input.
 
-* eg: `docker run -it --net=host microros/micro-ros-agent udp 9999`
+* e.g. `docker run -it --net=host microros/micro-ros-agent udp 9999`
 
 Will start micro-ROS-Agent listening UDP messages on port 9999
 
-**micro-ros-demos**
+#### micro-ros-demos
 
-This is one of the example images. Whith this image you can launch example applications usiong micro-ROS (Compiled for Linux boxes)
+micro-ros-demos is one of the example images.
+With this image, you can launch example applications using micro-ROS (Compiled for Linux boxes)
 This image entry point has a ROS 2 environment set up with micro-ROS examples.
-You can run regular ros2 tool to launch the examples
+You can run regular ros2 tool to launch the examples.
 
 * eg: `docker run -it --net=hot microros/micro-ros-demos ros2`
 
-The avaiable examples are:
+The currently avaiable examples are:
 * complex_msg_publisher_c & complex_msg_publisher_cpp
 * complex_msg_subscriber_c & complex_msg_subscriber_cpp
 * int32_publisher_c & int32_publisher_cpp
@@ -77,14 +83,11 @@ The avaiable examples are:
 
 This image provides you with a ready-to-flash firmware for Olimex-stm32-e407 with demos embedded on it.
 
-
 ## Automated builds
 
-
 These Docker files are used for automatically create images on Docker Hub.
-These builds are tagged as the ROS 2 version they will be compatible with: eg. crystal, dashing...
-
-The latest tag will be always the latest release of ROS 2.
+These builds are tagged with the ROS 2 version they will be compatible with: e.g. crystal, dashing...
+The latest tag will always be the latest release of ROS 2.
 
 These automatic builds has direct relationship with the content of the micro-ROS repositories:
 
@@ -96,6 +99,5 @@ micro-ros-agent |
 micro-ros-demos | https://github.com/micro-ROS/micro-ROS-demos 
 micro-ros-olimex-nuttx |   
 
-Apart from gihub repositoriesi changes, a build is triggered whenever the base image is updated on Docker Hub.
+Apart from GitHub repositories changes, a build could be triggered whenever the base image is updated on Docker Hub.
 Base images are specified in the FROM: directive in the Dockerfile.
-
