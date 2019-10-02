@@ -79,9 +79,18 @@ The currently avaiable examples are:
 * string_subscriber_c & string_subscriber_cpp
 * rad0_actuator_c, rad0_altitude_sensor_c, rad0_control_cpp & rad0_display_c
 
-**micro-ros-demos-nuttx**
+### micro-ros-olimex-nuttx
 
 This image provides you with a ready-to-flash firmware for Olimex-stm32-e407 with demos embedded on it.
+To flash your device you need to map your host machine devices to the Docker container
+
+* e.g. `docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb microros/micro-ros-olimex-nuttx:crystal`
+
+Once inside the container you can flash the board runing `scripts/flash.sh` from `firmware/NuttX` directory.
+
+There you can find a publisher and a subscriber examples.
+Both examples use serial transport to communicate with a micro-ROS-Agent, so you should start one with the same transport (You can use the micro-ros-agent imagen to do so).
+Once a client-agent communication is stablished you can use `ros2` tools to view the publications from the Olimex or to publish messages to it.
 
 ## Automated builds
 
