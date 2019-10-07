@@ -2,7 +2,7 @@ FROM microros/firmware:crystal
 
 WORKDIR /uros_ws/src
 
-RUN apt install -y gperf openocd 
+RUN apt install -y gperf openocd automake
 
 RUN git clone https://bitbucket.org/nuttx/tools.git ~/tools
 RUN (cd ~/tools/kconfig-frontends && \
