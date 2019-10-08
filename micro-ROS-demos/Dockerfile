@@ -1,6 +1,6 @@
 FROM microros/base:crystal
 
-WORKDIR /uros_ws/src
+WORKDIR /uros_ws
 
 RUN apt update && apt install -y liblog4cxx-dev clang 
 
