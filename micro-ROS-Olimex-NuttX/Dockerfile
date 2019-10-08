@@ -1,6 +1,6 @@
 FROM microros/firmware:crystal
 
-WORKDIR /uros_ws/src
+WORKDIR /uros_ws
 
 RUN apt install -y gperf openocd automake
 
