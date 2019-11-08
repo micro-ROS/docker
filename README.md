@@ -29,7 +29,7 @@ To get an image, you use `docker pull` command:
 
 You can select the tag to use appending `:tag` to the image name
 
-* e.g. ```docker pull microros/base:crystal```
+* e.g. ```docker pull microros/base:dashing```
 
 Once you have the image locally, to start it use `docker run`
 
@@ -84,7 +84,7 @@ The currently avaiable examples are:
 This image provides you with a ready-to-flash firmware for Olimex-stm32-e407 with demos embedded on it.
 To flash your device you need to map your host machine devices to the Docker container
 
-* e.g. `docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb microros/micro-ros-olimex-nuttx:crystal`
+* e.g. `docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb microros/micro-ros-olimex-nuttx:dashing`
 
 Once inside the container you can flash the board runing `scripts/flash.sh` from `firmware/NuttX` directory.
 
