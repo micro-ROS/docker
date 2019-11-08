@@ -1,4 +1,4 @@
-FROM microros/firmware:crystal
+FROM microros/firmware:dashing
 
 WORKDIR /uros_ws
 
@@ -15,4 +15,4 @@ RUN cd firmware/NuttX && \
 
 RUN  find ./firmware/mcu_ws/ -name rmw_microxrcedds.config -exec sed -i "s/CONFIG_MICRO_XRCEDDS_TRANSPORT=udp/CONFIG_MICRO_XRCEDDS_TRANSPORT=serial/g" {} \;
 
-RUN . /opt/ros/crystal/setup.sh && . install/local_setup.sh && ros2 run micro_ros_setup build_firmware.sh
+RUN . install/local_setup.sh && . install/micro_ros_setup/lib/micro_ros_setup/build_firmware.sh
