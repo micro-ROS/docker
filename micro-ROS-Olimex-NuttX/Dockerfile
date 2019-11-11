@@ -15,4 +15,4 @@ RUN cd firmware/NuttX && \
 
 RUN  find ./firmware/mcu_ws/ -name rmw_microxrcedds.config -exec sed -i "s/CONFIG_MICRO_XRCEDDS_TRANSPORT=udp/CONFIG_MICRO_XRCEDDS_TRANSPORT=serial/g" {} \;
 
-RUN . install/local_setup.sh && . install/micro_ros_setup/lib/micro_ros_setup/build_firmware.sh
+RUN . ./install/local_setup.sh && ./install/micro_ros_setup/lib/micro_ros_setup/build_firmware.sh
