@@ -10,3 +10,7 @@ RUN git clone --depth 1 -branch -b $ROS_DISTRO https://github.com/micro-ROS/micr
 &&  colcon build \
 &&  rm -rf log/ build/ src/* \
 &&  rm -rf /var/lib/apt/list/*
+
+COPY ./micro-ros_entrypoint.sh /micro-ros_entrypoint.sh
+ENTRYPOINT ["/micro-ros_entrypoint.sh"]
+CMD ["bash"]
