@@ -29,7 +29,7 @@ To get an image, you use `docker pull` command:
 
 You can select the tag to use appending `:tag` to the image name
 
-* e.g. ```docker pull microros/base:dashing```
+* e.g. ```docker pull microros/base:foxy```
 
 Once you have the image locally, to start it use `docker run`
 
@@ -84,7 +84,7 @@ The currently avaiable examples are:
 This image provides you with a ready-to-flash firmware for Olimex-stm32-e407 with demos embedded on it.
 To flash your device you need to map your host machine devices to the Docker container
 
-* e.g. `docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb microros/micro-ros-olimex-nuttx:dashing`
+* e.g. `docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb microros/micro-ros-olimex-nuttx:foxy`
 
 Once inside the container you can flash the board runing `scripts/flash.sh` from `firmware/NuttX` directory.
 
@@ -95,7 +95,7 @@ Once a client-agent communication is stablished you can use `ros2` tools to view
 ## Automated builds
 
 These Docker files are used for automatically create images on Docker Hub.
-These builds are tagged with the ROS 2 version they will be compatible with: e.g. crystal, dashing...
+These builds are tagged with the ROS 2 version they will be compatible with: e.g. crystal, dashing, foxy...
 The latest tag will always be the latest release of ROS 2.
 
 These automatic builds has direct relationship with the content of the micro-ROS repositories:
