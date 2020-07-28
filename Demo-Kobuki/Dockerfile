@@ -1,4 +1,4 @@
-FROM microros/micro-ros-agent:dashing
+FROM microros/micro-ros-agent:foxy
 
 WORKDIR /uros_ws
 
