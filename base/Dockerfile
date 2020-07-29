@@ -2,7 +2,7 @@ FROM ros:foxy
 
 RUN mkdir -p uros_ws
 WORKDIR uros_ws
-RUN git clone --depth 1 -branch -b feature/foxy_migration https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-build \
+RUN git clone --depth 1 -branch -b foxy https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-build \
 &&  . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  apt update \
 &&  apt install ed \
