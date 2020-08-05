@@ -13,5 +13,9 @@ RUN git clone --depth 1 -branch -b foxy https://github.com/micro-ROS/micro-ros-b
 &&  rm -rf /var/lib/apt/lists/*
 
 COPY ./micro-ros_entrypoint.sh /micro-ros_entrypoint.sh
+
+RUN echo ". /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
+RUN echo ". /uros_ws/install/setup.bash" >> ~/.bashrc
+
 ENTRYPOINT ["/micro-ros_entrypoint.sh"]
 CMD ["bash"]
