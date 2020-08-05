@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source "/opt/ros/$ROS_DISTRO/setup.bash"
-source "/uros_ws/install/setup.bash"
+echo ". /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
+echo ". /uros_ws/install/setup.bash" >> ~/.bashrc
 
 exec "$@"
