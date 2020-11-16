@@ -68,7 +68,7 @@ With this image, you can launch example applications using micro-ROS (Compiled f
 This image entry point has a ROS 2 environment set up with micro-ROS examples.
 You can run regular ros2 tool to launch the examples.
 
-* eg: `docker run -it --net=hot microros/micro-ros-demos ros2`
+* eg: `docker run -it --net=host microros/micro-ros-demos ros2`
 
 The currently avaiable examples are:
 * complex_msg_publisher_c & complex_msg_publisher_cpp
