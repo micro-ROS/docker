@@ -1,13 +1,13 @@
 # micro-ROS Dockers
 
-This repository contains Docker-related material to setup, configure and develop a [micro-ROS](https://microros.github.io/)-based application.
+This repository contains Docker-related material aimed at setting up, configuring and developing a [micro-ROS](https://microros.github.io/)-based application.
 
-This set of Dockerfiles provide ready-to-use environments to easily execute micro-ROS examples in your host machine, as well as use the standalone [micro-ROS build system]()https://github.com/micro-ROS/micro_ros_setup.
-Plus, two additional images to use micro-ROS as an external library, both in [ESP-IDF](https://github.com/micro-ROS/micro_ros_espidf_component/tree/foxy/docker) and within [Arduino IDE](https://github.com/micro-ROS/micro_ros_arduino/tree/foxy/extras/library_generation), are provided.
+This set of Dockerfiles provides ready-to-use environments to easily execute micro-ROS examples in your host machine, as well as to use the standalone [micro-ROS build system](https://github.com/micro-ROS/micro_ros_setup).
+In addition, two images are provided that allow using micro-ROS as an external library, both in [ESP-IDF](https://github.com/micro-ROS/micro_ros_espidf_component/tree/foxy/docker) and within [Arduino IDE](https://github.com/micro-ROS/micro_ros_arduino/tree/foxy/extras/library_generation).
 
-The Docker images are available in [dockerhub](https://hub.docker.com/u/microros).
+The Docker images can be found at [dockerhub](https://hub.docker.com/u/microros).
 
-Avaiable images are listed below:
+The avaiable images are listed below:
 
 | Image | Description | Status
 -|-|-:
@@ -27,18 +27,20 @@ For installing Docker, refer to the official documentation at https://www.docker
 
 ## Usage
 
-To get an image, you use `docker pull` command:
+To get an image, use the `docker pull` command:
 
 * e.g. `docker pull microros/base`
 
-You can select the tag to use appending `:tag` to the image name
+You can select the preferred tag by appending `:tag` to the image name
 
 * e.g. `docker pull microros/base:foxy`
 
-Once you have the image locally, to start it use `docker run`. It is not mandatory, although usually useful, to launch your containers using the `--rm` and `--net=host` flags
+Once you have the image locally, type `docker run` to start it. It is not mandatory, although usually useful, to launch your containers using the `--rm` and `--net=host` flags:
 
 * e.g. `docker run -it --rm --net=host microros/micro-ros-agent:foxy`
 
+`--rm` makes sure that the docker image will be removed after exiting.
+`--net=host` provides the container with the same network access as the host.
 `-it` allocates a pseudo-TTY for you and keeps stdin listening.
 Another used command is `-v` to map local files with docker container ones.
 `-v` is useful in case you may want to flash boards from within a Docker container.
@@ -52,45 +54,45 @@ From this image, you can start any development targeting micro-ROS.
 
 #### micro-ros-agent
 
-This image purpose is being used as a stand-alone application.
-It includes installation of the ROS 2 version selected by the tag along with a micro-ROS-Agent.
-The entry point of this image is directly the micro-ROS-Agent, so upon execution of `docker run` you will be facing micro-ROS-Agent command line input.
+This image is meant to be used as a stand-alone application.
+It includes the installation of the ROS 2 version selected by the tag selected, together with a micro-ROS Agent.
+The entry point of this image is directly the micro-ROS Agent, so upon execution of `docker run` you will be facing the micro-ROS Agent command line input. Running:
 
 * e.g. `docker run -it --net=host microros/micro-ros-agent:foxy udp4 -p 9999`
 
-Will start micro-ROS-Agent listening UDP messages on port 9999.
+will start a micro-ROS Agent listening to UDP messages on port 9999.
 
 #### micro-ros-demos
 
-micro-ros-demos is one of the example images.
-With this image, you can launch example applications using micro-ROS (Compiled for Linux machines).
+`micro-ros-demos` is one of the example images.
+With this image, you can launch example applications using micro-ROS (compiled for Linux machines).
 This image entry point has a ROS 2 environment set up with micro-ROS examples.
-You can run regular ros2 tool to launch the examples.
+You can run regular ROS 2 tools to launch the examples.
 
 * eg: `docker run -it --net=host microros/micro-ros-demos bash`
 
-The currently available examples are listed [here](https://github.com/micro-ROS/micro-ROS-demos/rclc):
+The currently available examples are listed [here](https://github.com/micro-ROS/micro-ROS-demos/rclc).
 
-#### micro-ros-olimex-nuttx
+#### micro-ros-olimex-nuttx (unmaintained)
 
-This image provides you with a ready-to-flash firmware for Olimex-stm32-e407 with demos embedded on it.
-To flash your device you need to map your host machine devices to the Docker container
+This image provides you with a ready-to-flash firmware for Olimex-STM32-E407 boards with demos included.
+To be able to flash, you need to map your devices to the Docker container as follows:
 
 * e.g. `docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb microros/micro-ros-olimex-nuttx:foxy`
 
-Once inside the container you can flash the board runing `scripts/flash.sh` from `firmware/NuttX` directory.
+Once inside the container, you can flash the board by running `scripts/flash.sh` from the `firmware/NuttX` directory.
 
 There you can find a publisher and a subscriber examples.
-Both examples use serial transport to communicate with a micro-ROS-Agent, so you should start one with the same transport (You can use the micro-ros-agent imagen to do so).
-Once a client-agent communication is stablished you can use `ros2` tools to view the publications from the Olimex or to publish messages to it.
+Both examples use serial transport to communicate with a micro-ROS Agent, so you should start an Agent with the same transport (You can use the `micro-ros-agent` image to do so).
+Once a Client-Agent communication is established you can use ROS 2 tools to view the publications from the Olimex or to publish messages to it.
 
 ## Automated builds
 
-These Dockerfiles are used for automatically create images on Docker Hub.
+These Dockerfiles are used for automatically creating images on Docker Hub.
 These builds are tagged with the ROS 2 version they will be compatible with: e.g. dashing, foxy...
-The latest tag will always be the latest release of ROS 2.
+The latest tag will always correspond to the latest release of ROS 2.
 
-These automatic builds have direct relationship with the content of the micro-ROS repositories:
+These automatic builds have a direct relationship with the content of the micro-ROS repositories:
 
  Image | Triggers
 -|-
@@ -100,8 +102,8 @@ micro-ros-demos | https://github.com/micro-ROS/micro-ROS-demos
 micro_ros_arduino_builder | https://github.com/micro-ROS/micro_ros_arduino
 esp-idf-microros | https://github.com/micro-ROS/micro_ros_espidf_component
 
-Apart from GitHub repositories changes, a build could be triggered whenever the base image is updated on Docker Hub.
-Base images are specified in the FROM: directive in the Dockerfile.
+Apart from GitHub repositories changes, a build can be triggered whenever the base image is updated on Docker Hub.
+Base images are specified with the `FROM:` directive in the Dockerfile.
 
 ## Purpose of the Project
 
@@ -122,6 +124,6 @@ see the file [3rd-party-licenses.txt](3rd-party-licenses.txt).
 
 ## Known Issues/Limitations
 
-Please notice the following issues/limitations:
+There are no known limitations.
 
-* There is an unknown issue when dealing with serial ports shared with the micro-ROS agent running inside a Docker. Sometimes it works with a remarkable packet loss.
+If you find issues, [please report them](https://github.com/micro-ROS/micro_ros_setup/issues).
