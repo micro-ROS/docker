@@ -73,7 +73,7 @@ You can run regular ROS 2 tools to launch the examples.
 
 The currently available examples are listed [here](https://github.com/micro-ROS/micro-ROS-demos/rclc).
 
-#### micro-ros-olimex-nuttx
+#### micro-ros-olimex-nuttx (unmaintained)
 
 This image provides you with a ready-to-flash firmware for Olimex-STM32-E407 boards with demos included.
 To be able to flash, you need to map your devices to the Docker container as follows:
