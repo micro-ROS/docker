@@ -7,7 +7,7 @@ In addition, two images are provided that allow using micro-ROS as an external l
 
 The Docker images can be found at [dockerhub](https://hub.docker.com/u/microros).
 
-The avaiable images are listed below:
+The available images are listed below:
 
 | Image | Description | Status
 -|-|-:
