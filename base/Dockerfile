@@ -1,8 +1,8 @@
-FROM ros:foxy 
+FROM ros:foxy
 
 RUN mkdir -p uros_ws
 WORKDIR uros_ws
-RUN git clone --depth 1 -branch -b foxy https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-build \
+RUN git clone --depth 1 -b foxy https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup \
 &&  . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  apt update \
 &&  apt install ed \
