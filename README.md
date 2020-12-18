@@ -86,6 +86,25 @@ There you can find a publisher and a subscriber examples.
 Both examples use serial transport to communicate with a micro-ROS Agent, so you should start an Agent with the same transport (You can use the `micro-ros-agent` image to do so).
 Once a Client-Agent communication is established you can use ROS 2 tools to view the publications from the Olimex or to publish messages to it.
 
+#### micro_ros_arduino_builder
+
+The `micro_ros_arduino_builder` docker image provides you with a set of include files and pre-compiled micro-ROS libraries to develop your micro-ROS application within the Arduino IDE environment.
+To be able to use it, use the following command to instantiate a container of this image:
+
+* e.g. `docker run -it -v $(pwd):/arduino_project --net=host microros/micro_ros_arduino_builder:foxy`.
+
+Note that folders added to `extras/library_generation/extra_packages` and entries added to `extras/library_generation/extra_packages/extra_packages.repos` will be taken into account by this build system.
+
+#### esp-idf-microros
+
+This Docker image allows you to use micro-ROS as a component of the ESP-IDF build system.
+
+To use it:
+
+* e.g. `docker run -it --user espidf --volume="/etc/timezone:/etc/timezone:ro" -v  $(pwd):/micro_ros_espidf_component -v  /dev:/dev --privileged --workdir /micro_ros_espidf_component microros/esp-idf-microros:latest /bin/bash"`
+
+Then, you can navigate to your example aplications and build it using the ESP IDF buildtool system script, `idf.py menuconfig/build/flash/monitor`.
+
 ## Automated builds
 
 These Dockerfiles are used for automatically creating images on Docker Hub.
