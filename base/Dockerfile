@@ -5,7 +5,7 @@ WORKDIR uros_ws
 RUN git clone --depth 1 -b foxy https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup \
 &&  . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  apt update \
-&&  apt install ed \
+&&  apt install -y ed python3-pip \
 &&  rosdep update \
 &&  rosdep install --from-paths src --ignore-src -y \
 &&  colcon build \
