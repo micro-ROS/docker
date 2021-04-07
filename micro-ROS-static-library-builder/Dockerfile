@@ -24,7 +24,10 @@ RUN git clone https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-bui
     && rm -rf gcc-arm-none-eabi-4_8-2014q1-20140314-linux.tar.bz2 gcc-arm-none-eabi-4_8-2014q1/share/doc \
     && wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/7-2017q4/gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2 \
     && tar -xvf gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2 \
-    && rm -rf gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2 gcc-arm-none-eabi-7-2017-q4-major/share/doc 
+    && rm -rf gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2 gcc-arm-none-eabi-7-2017-q4-major/share/doc \
+    && wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 \
+    && tar -xvf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 \
+    && rm -rf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 gcc-arm-none-eabi-9-2020-q2-update/share/doc 
 
 COPY ./entrypoint.sh /entrypoint.sh
 
