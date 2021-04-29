@@ -1,4 +1,4 @@
-FROM microros/base:foxy
+FROM microros/base:rolling
 
 WORKDIR /uros_ws
 

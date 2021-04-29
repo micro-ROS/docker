@@ -1,8 +1,9 @@
-FROM microros/base:foxy
+FROM microros/base:rolling
 
 WORKDIR /uros_ws
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  . install/local_setup.sh \
+&&  apt update \
 &&  ros2 run micro_ros_setup create_agent_ws.sh \
 &&  ros2 run micro_ros_setup build_agent.sh \
 &&  rm -rf log/ build/ src/
