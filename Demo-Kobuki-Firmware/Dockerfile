@@ -1,4 +1,4 @@
-FROM microros/base:dashing
+FROM microros/base:foxy
 
 WORKDIR /uros_ws
 
