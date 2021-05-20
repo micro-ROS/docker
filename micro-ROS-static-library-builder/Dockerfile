@@ -1,4 +1,4 @@
-FROM ros:foxy
+FROM ros:rolling
 
 RUN mkdir -p uros_ws
 WORKDIR uros_ws
@@ -23,7 +23,7 @@ RUN apt update \
     && rm -rf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 gcc-arm-none-eabi-9-2020-q2-update/share/doc
 
 # Install micro-ROS
-RUN git clone -b foxy https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-build \
+RUN git clone -b main https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-build \
     &&  . /opt/ros/$ROS_DISTRO/setup.sh \
     &&  apt update \
     &&  apt install -y python3-pip python3-nose clang-format pyflakes3 python3-mypy python3-pytest-mock gperf ros-$ROS_DISTRO-osrf-testing-tools-cpp python3-lttng ros-$ROS_DISTRO-mimick-vendor python3-babeltrace \
