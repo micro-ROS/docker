@@ -1,4 +1,4 @@
-FROM microros/firmware:rolling
+FROM microros/firmware:galactic
 
 WORKDIR /uros_ws
 

@@ -2,7 +2,7 @@ FROM ros:rolling
 
 RUN mkdir -p uros_ws
 WORKDIR uros_ws
-RUN git clone --depth 1 -b main https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup \
+RUN git clone --depth 1 -b galactic https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup \
 &&  . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  apt update \
 &&  apt install -y ed python3-pip \

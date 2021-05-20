@@ -3,7 +3,7 @@
 This repository contains Docker-related material aimed at setting up, configuring and developing a [micro-ROS](https://microros.github.io/)-based application.
 
 This set of Dockerfiles provides ready-to-use environments to easily execute micro-ROS examples in your host machine, as well as to use the standalone [micro-ROS build system](https://github.com/micro-ROS/micro_ros_setup).
-In addition, two images are provided that allow using micro-ROS as an external library, both in [ESP-IDF](https://github.com/micro-ROS/micro_ros_espidf_component/tree/main/docker).
+In addition, two images are provided that allow using micro-ROS as an external library, both in [ESP-IDF](https://github.com/micro-ROS/micro_ros_espidf_component/tree/galactic/docker).
 
 The Docker images can be found at [dockerhub](https://hub.docker.com/u/microros).
 
@@ -11,7 +11,7 @@ The available images are listed below:
 
 | Image                            | Description                                                                                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Status |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| base                             | Base image with a ROS 2 Rolling installation + micro-ROS specific build system tools. Used as base of any other micro-ROS image |                                                                                                                                                                         [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/base.svg?logo=docker)](https://hub.docker.com/r/microros/base/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/base.svg?logo=docker)](https://hub.docker.com/r/microros/base/)[![Compare Images](https://images.microbadger.com/badges/image/microros/base.svg)](https://microbadger.com/images/microros/base) |
+| base                             | Base image with a ROS 2 Galactic installation + micro-ROS specific build system tools. Used as base of any other micro-ROS image |                                                                                                                                                                         [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/base.svg?logo=docker)](https://hub.docker.com/r/microros/base/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/base.svg?logo=docker)](https://hub.docker.com/r/microros/base/)[![Compare Images](https://images.microbadger.com/badges/image/microros/base.svg)](https://microbadger.com/images/microros/base) |
 | micro-ros-agent                  | Image containing a pre-compiled micro-ROS-Agent, ready to use as a standalone application                                       |                                                                                                       [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/micro-ros-agent.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-agent/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/micro-ros-agent.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-agent/)[![Compare Images](https://images.microbadger.com/badges/image/microros/micro-ros-agent.svg)](https://microbadger.com/images/microros/micro-ros-agent) |
 | micro-ros-demos                  | Contains pre-compiled micro-ROS demo applications, ready to use to get a taste of micro-ROS capabilities                        |                                                                                                       [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/micro-ros-demos.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-demos/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/micro-ros-demos.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-demos/)[![Compare Images](https://images.microbadger.com/badges/image/microros/micro-ros-demos.svg)](https://microbadger.com/images/microros/micro-ros-demos) |
 | micro_ros_static_library_builder | Allows to use a pre-compiled micro-ROS library to develop applications in external environments                                 | [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/micro_ros_static_library_builder.svg?logo=docker)](https://hub.docker.com/r/microros/micro_ros_static_library_builder/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/micro_ros_static_library_builder.svg?logo=docker)](https://hub.docker.com/r/microros/micro_ros_static_library_builder/)[![Compare Images](https://images.microbadger.com/badges/image/microros/micro_ros_static_library_builder.svg)](https://microbadger.com/images/microros/micro_ros_static_library_builder) |
@@ -33,11 +33,11 @@ To get an image, use the `docker pull` command:
 
 You can select the preferred tag by appending `:tag` to the image name
 
-* e.g. `docker pull microros/base:rolling`
+* e.g. `docker pull microros/base:galactic`
 
 Once you have the image locally, type `docker run` to start it. It is not mandatory, although usually useful, to launch your containers using the `--rm` and `--net=host` flags:
 
-* e.g. `docker run -it --rm --net=host microros/micro-ros-agent:rolling`
+* e.g. `docker run -it --rm --net=host microros/micro-ros-agent:galactic`
 
 `--rm` makes sure that the docker image will be removed after exiting.
 `--net=host` provides the container with the same network access as the host.
@@ -58,7 +58,7 @@ This image is meant to be used as a stand-alone application.
 It includes the installation of the ROS 2 version selected by the tag selected, together with a micro-ROS Agent.
 The entry point of this image is directly the micro-ROS Agent, so upon execution of `docker run` you will be facing the micro-ROS Agent command line input. Running:
 
-* e.g. `docker run -it --net=host microros/micro-ros-agent:rolling udp4 -p 9999`
+* e.g. `docker run -it --net=host microros/micro-ros-agent:galactic udp4 -p 9999`
 
 will start a micro-ROS Agent listening to UDP messages on port 9999.
 
@@ -78,7 +78,7 @@ The currently available examples are listed [here](https://github.com/micro-ROS/
 This image provides you with a ready-to-flash firmware for Olimex-STM32-E407 boards with demos included.
 To be able to flash, you need to map your devices to the Docker container as follows:
 
-* e.g. `docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb microros/micro-ros-olimex-nuttx:rolling`
+* e.g. `docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb microros/micro-ros-olimex-nuttx:galactic`
 
 Once inside the container, you can flash the board by running `scripts/flash.sh` from the `firmware/NuttX` directory.
 
@@ -91,7 +91,7 @@ Once a Client-Agent communication is established you can use ROS 2 tools to view
 The `micro_ros_static_library_builder` docker image provides you with a set of include files and pre-compiled micro-ROS libraries to develop your micro-ROS application within the Arduino IDE environment.
 To be able to use it, use the following command to instantiate a container of this image:
 
-* e.g. `docker run -it -v $(pwd):/arduino_project --net=host microros/micro_ros_static_library_builder:rolling`.
+* e.g. `docker run -it -v $(pwd):/arduino_project --net=host microros/micro_ros_static_library_builder:galactic`.
 
 Note that folders added to `extras/library_generation/extra_packages` and entries added to `extras/library_generation/extra_packages/extra_packages.repos` will be taken into account by this build system.
 
@@ -108,7 +108,7 @@ Then, you can navigate to your example aplications and build it using the ESP ID
 ## Automated builds
 
 These Dockerfiles are used for automatically creating images on Docker Hub.
-These builds are tagged with the ROS 2 version they will be compatible with: e.g. foxy, rolling...
+These builds are tagged with the ROS 2 version they will be compatible with: e.g. foxy, galactic, rolling...
 The latest tag will always correspond to the latest release of ROS 2.
 
 These automatic builds have a direct relationship with the content of the micro-ROS repositories:
