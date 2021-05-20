@@ -15,7 +15,6 @@ The available images are listed below:
 | micro-ros-agent                  | Image containing a pre-compiled micro-ROS-Agent, ready to use as a standalone application                                       |                                                                                                       [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/micro-ros-agent.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-agent/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/micro-ros-agent.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-agent/)[![Compare Images](https://images.microbadger.com/badges/image/microros/micro-ros-agent.svg)](https://microbadger.com/images/microros/micro-ros-agent) |
 | micro-ros-demos                  | Contains pre-compiled micro-ROS demo applications, ready to use to get a taste of micro-ROS capabilities                        |                                                                                                       [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/micro-ros-demos.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-demos/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/micro-ros-demos.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-demos/)[![Compare Images](https://images.microbadger.com/badges/image/microros/micro-ros-demos.svg)](https://microbadger.com/images/microros/micro-ros-demos) |
 | micro_ros_static_library_builder | Allows to use a pre-compiled micro-ROS library to develop applications in external environments                                 | [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/micro_ros_static_library_builder.svg?logo=docker)](https://hub.docker.com/r/microros/micro_ros_static_library_builder/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/micro_ros_static_library_builder.svg?logo=docker)](https://hub.docker.com/r/microros/micro_ros_static_library_builder/)[![Compare Images](https://images.microbadger.com/badges/image/microros/micro_ros_static_library_builder.svg)](https://microbadger.com/images/microros/micro_ros_static_library_builder) |
-| micro-ros-olimex-nuttx           | Contains a ready to flash example for  Olimex STM32 E407                                                                        |                                                             [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/micro-ros-olimex-nuttx.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-olimex-nuttx/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/micro-ros-olimex-nuttx.svg?logo=docker)](https://hub.docker.com/r/microros/micro-ros-olimex-nuttx/)[![Compare Images](https://images.microbadger.com/badges/image/microros/micro-ros-olimex-nuttx.svg)](https://microbadger.com/images/microros/micro-ros-olimex-nuttx) |
 | esp-idf-microros                 | Allows to use micro-ROS as a component of the ESP-IDF build system                                                              |                                                                                                 [![Docker Automated build](https://img.shields.io/docker/cloud/automated/microros/esp-idf-microros.svg?logo=docker)](https://hub.docker.com/r/microros/esp-idf-microros/)[![Docker Build Status](https://img.shields.io/docker/cloud/build/microros/esp-idf-microros.svg?logo=docker)](https://hub.docker.com/r/microros/esp-idf-microros/)[![Compare Images](https://images.microbadger.com/badges/image/microros/esp-idf-microros.svg)](https://microbadger.com/images/microros/esp-idf-microros) |
 
 ![](http://www.plantuml.com/plantuml/svg/VP71JiCm38RlUGfhzsXtn65lW0GFC6M9kreqpMHdWaeyF6v26b3HRlRt_wxzDoV9ZlCzJiQC510yiP-mrXXlUO68yO8incJA4q8apyc-lhn1IFuT6IYwAmgCXEpOZuinVd8YS42vCOhGSAGm7C09RAHPECdJa3wNece3JIXR51mlJh1RrcvdgHTfPVMGENTtQH_O0yRV-qlxl_sirTbnkDES-i0Fs8reJAkHRGDzGYaOemYUlsn87xCjaHfXkexPRjzTfMwiQVwoUlBsMxjG5vrm3klJVWC0)
@@ -72,20 +71,6 @@ You can run regular ROS 2 tools to launch the examples.
 * eg: `docker run -it --net=host microros/micro-ros-demos bash`
 
 The currently available examples are listed [here](https://github.com/micro-ROS/micro-ROS-demos/rclc).
-
-#### micro-ros-olimex-nuttx (unmaintained)
-
-This image provides you with a ready-to-flash firmware for Olimex-STM32-E407 boards with demos included.
-To be able to flash, you need to map your devices to the Docker container as follows:
-
-* e.g. `docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb microros/micro-ros-olimex-nuttx:galactic`
-
-Once inside the container, you can flash the board by running `scripts/flash.sh` from the `firmware/NuttX` directory.
-
-There you can find a publisher and a subscriber examples.
-Both examples use serial transport to communicate with a micro-ROS Agent, so you should start an Agent with the same transport (You can use the `micro-ros-agent` image to do so).
-Once a Client-Agent communication is established you can use ROS 2 tools to view the publications from the Olimex or to publish messages to it.
-
 #### micro_ros_static_library_builder
 
 The `micro_ros_static_library_builder` docker image provides you with a set of include files and pre-compiled micro-ROS libraries to develop your micro-ROS application within the Arduino IDE environment.
@@ -118,7 +103,6 @@ These automatic builds have a direct relationship with the content of the micro-
  | base                             | https://github.com/micro-ROS/micro-ROS-build                                                       |
  | micro-ros-agent                  | https://github.com/micro-ROS/micro-ROS-Agent <br> https://github.com/eProsima/Micro-XRCE-DDS-Agent |
  | micro-ros-demos                  | https://github.com/micro-ROS/micro-ROS-demos                                                       |
- | micro_ros_static_library_builder | https://github.com/micro-ROS/micro_ros_arduino                                                     |
  | esp-idf-microros                 | https://github.com/micro-ROS/micro_ros_espidf_component                                            |
 
 Apart from GitHub repositories changes, a build can be triggered whenever the base image is updated on Docker Hub.
