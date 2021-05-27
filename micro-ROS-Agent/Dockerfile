@@ -1,4 +1,4 @@
-FROM microros/base:rolling
+FROM microros/base:galactic
 
 WORKDIR /uros_ws
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
