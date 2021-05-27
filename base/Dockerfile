@@ -6,7 +6,7 @@ RUN git clone --depth 1 -b foxy https://github.com/micro-ROS/micro_ros_setup.git
 &&  . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  apt update \
 &&  apt install -y ed python3-pip \
-&&  rosdep update \
+&&  rosdep update --rosdistro $ROS_DISTRO\
 &&  rosdep install --from-paths src --ignore-src -y \
 &&  colcon build \
 &&  rm -rf log/ build/ src/* \
