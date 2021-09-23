@@ -9,8 +9,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  rm -rf log/ build/ src/
 
 # Disable shared memory
-COPY disable_fastdds_shm.xml /tmp/
-ENV FASTRTPS_DEFAULT_PROFILES_FILE=/tmp/disable_fastdds_shm.xml
+COPY disable_fastdds_shm.xml disable_fastdds_shm_localhost_only.xml /tmp/
 
 # setup entrypoint
 COPY ./micro-ros_entrypoint.sh /
