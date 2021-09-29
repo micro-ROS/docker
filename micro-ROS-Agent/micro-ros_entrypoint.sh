@@ -1,8 +1,5 @@
 . "/opt/ros/$ROS_DISTRO/setup.sh"
 . "/uros_ws/install/local_setup.sh"
-<<<<<<< HEAD
-exec ros2 run micro_ros_agent micro_ros_agent $@
-=======
 
 if [ "$ROS_LOCALHOST_ONLY" = "1" ] ; then
     export FASTRTPS_DEFAULT_PROFILES_FILE=/tmp/disable_fastdds_shm_localhost_only.xml
@@ -11,4 +8,3 @@ else
 fi
 
 exec ros2 run micro_ros_agent micro_ros_agent "$@"
->>>>>>> 102b9f1 (support ROS_LOCALHOST_ONLY variable (#69))
