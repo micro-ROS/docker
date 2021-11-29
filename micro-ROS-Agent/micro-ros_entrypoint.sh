@@ -7,9 +7,7 @@ else
 fi
 
 if [ "$MICROROS_STATIC_SOURCE" = "1" ] ; then
-    export LD_LIBRARY_PATH=/uros_ws/install/micro_ros_agent/lib:/uros_ws/install/micro_ros_msgs/lib:/opt/ros/galactic/opt/yaml_cpp_vendor/lib:/opt/ros/galactic/lib/x86_64-linux-gnu:/opt/ros/galactic/lib:$LD_LIBRARY_PATH
-    PYTHONPATH=/uros_ws/install/micro_ros_msgs/lib/python3.8/site-packages:/opt/ros/galactic/lib/python3.8/site-packages:$PYTHONPATH
-    export ROS_DISTRO=galactic
+    . /micro-ros_agent_static_source.sh
 
     /uros_ws/install/micro_ros_agent/lib/micro_ros_agent/micro_ros_agent "$@"
 else

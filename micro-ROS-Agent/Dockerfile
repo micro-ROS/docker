@@ -12,6 +12,6 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh \
 COPY disable_fastdds_shm.xml disable_fastdds_shm_localhost_only.xml /tmp/
 
 # setup entrypoint
-COPY ./micro-ros_entrypoint.sh /
-ENTRYPOINT ["/bin/sh", "/micro-ros_entrypoint.sh"]
+COPY ./micro-ros_entrypoint.sh ./micro-ros_agent_static_source.sh /
+ENTRYPOINT ["/micro-ros_entrypoint.sh"]
 CMD ["--help"]
