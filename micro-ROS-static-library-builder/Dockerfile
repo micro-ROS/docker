@@ -20,7 +20,10 @@ RUN apt update \
     && rm -rf gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2 gcc-arm-none-eabi-7-2017-q4-major/share/doc \
     && wget --no-check-certificate https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 \
     && tar -xvf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 \
-    && rm -rf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 gcc-arm-none-eabi-9-2020-q2-update/share/doc
+    && rm -rf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 gcc-arm-none-eabi-9-2020-q2-update/share/doc \
+    && wget --no-check-certificate https://github.com/espressif/crosstool-NG/releases/download/esp-2021r2/xtensa-esp32-elf-gcc8_4_0-esp-2021r2-linux-amd64.tar.gz \
+    && tar -xvf xtensa-esp32-elf-gcc8_4_0-esp-2021r2-linux-amd64.tar.gz \
+    && rm -rf xtensa-esp32-elf-gcc8_4_0-esp-2021r2-linux-amd64.tar.gz
 
 # Install micro-ROS
 RUN git clone -b galactic https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-build \
