@@ -25,10 +25,11 @@ RUN apt update \
     && tar -xvf xtensa-esp32-elf-gcc8_4_0-esp-2021r2-linux-amd64.tar.gz \
     && mv xtensa-esp32-elf xtensa-esp32-elf-gcc8_4_0-esp-2021r2 \
     && rm -rf xtensa-esp32-elf-gcc8_4_0-esp-2021r2-linux-amd64.tar.gz \
-    && wget --no-check-certificate https://github.com/espressif/crosstool-NG/releases/download/esp-2020r2/xtensa-esp32-elf-gcc8_2_0-esp-2020r2-linux-amd64.tar.gz \
-    && tar -xvf xtensa-esp32-elf-gcc8_2_0-esp-2020r2-linux-amd64.tar.gz \
-    && mv xtensa-esp32-elf xtensa-esp32-elf-gcc8_2_0-esp-2020r2 \
-    && rm -rf xtensa-esp32-elf-gcc8_2_0-esp-2020r2-linux-amd64.tar.gz
+    && wget --no-check-certificate https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz \
+    && tar -xvf xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz \
+    && mv xtensa-esp32-elf xtensa-esp32-elf-linux64-1.22 \
+    && rm -rf xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+    
 
 # Install micro-ROS
 RUN git clone -b galactic https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-build \
