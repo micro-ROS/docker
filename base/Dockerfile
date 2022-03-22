@@ -5,6 +5,8 @@ WORKDIR uros_ws
 RUN git clone --depth 1 -b main https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup \
 &&  . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  apt update \
+## Workaround. Remove when https://discourse.ros.org/t/preparing-for-rolling-sync-delayed-by-python-3-10-transition/24521 solved
+&&  apt install -y python3.9-dev \
 &&  apt install -y ed python3-pip \
 &&  apt install -y ros-$ROS_DISTRO-rmw-fastrtps-cpp \
 &&  apt remove -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
