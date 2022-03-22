@@ -1,4 +1,4 @@
-name: micro-ROS Agent Docker generation
+name: micro-ROS Base Docker generation
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
         description: "Manual trigger"
 
 jobs:
-  agent_docker_generation:
+  base_docker_generation:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -35,7 +35,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./micro-ROS-Agent/
+          context: ./base/
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: microros/micro-ros-agent:${{ matrix.ros_distribution }}
+          tags: microros/base:${{ matrix.ros_distribution }}
