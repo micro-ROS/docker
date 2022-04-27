@@ -17,6 +17,8 @@ jobs:
             branch: foxy
           - ros_distribution: galactic
             branch: galactic
+          - ros_distribution: humble
+            branch: humble
           - ros_distribution: rolling
             branch: main
     steps:
