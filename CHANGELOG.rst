@@ -2,8 +2,8 @@
 Changelog for package micro_ros_dockers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.0 (2022-05-25)
+------------------
 * Add Github Action for libgen (`#80 <https://github.com/micro-ROS/docker/issues/80>`_)
 * Add Base Docker generation action
 * Add Agent Docker generation action
