@@ -2,8 +2,8 @@
 Changelog for package micro_ros_dockers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.0.0 (2022-05-25)
+------------------
 * Add humble to libgen
 * Add Github Action for libgen (`#80 <https://github.com/micro-ROS/docker/issues/80>`_) (`#83 <https://github.com/micro-ROS/docker/issues/83>`_)
 * Upgrade to Humble
