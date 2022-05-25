@@ -2,8 +2,8 @@
 Changelog for package micro_ros_dockers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+4.0.0 (2022-05-25)
+------------------
 * Add Github Action for libgen (`#80 <https://github.com/micro-ROS/docker/issues/80>`_) (`#82 <https://github.com/micro-ROS/docker/issues/82>`_)
 * Fix workaround
 * Add rsync to library builder (`#78 <https://github.com/micro-ROS/docker/issues/78>`_)
