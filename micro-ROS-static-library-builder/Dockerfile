@@ -3,7 +3,7 @@ FROM ros:galactic
 RUN mkdir -p uros_ws
 WORKDIR uros_ws
 RUN apt update \
-    &&  apt install -y wget \
+    &&  apt install -y wget dos2unix \
     &&  rm -rf log/ build/ src/* \
     &&  rm -rf /var/lib/apt/lists/* \
     && wget --no-check-certificate https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q2-update/+download/gcc-arm-none-eabi-5_4-2016q2-20160622-linux.tar.bz2 \
