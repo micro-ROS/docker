@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-FROM microros/base:rolling
-=======
-FROM microros/base:humble AS micro-ros-agent-builder
->>>>>>> 4d0209d (make the agent image 4x smaller thanks to multi stage build (#90))
+FROM microros/base:rolling AS micro-ros-agent-builder
 
 WORKDIR /uros_ws
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
