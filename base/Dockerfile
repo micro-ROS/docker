@@ -1,8 +1,14 @@
 FROM ros:foxy
 
+<<<<<<< HEAD
 RUN mkdir -p uros_ws
 WORKDIR uros_ws
 RUN git clone --depth 1 -b foxy https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup \
+=======
+WORKDIR /uros_ws
+
+RUN git clone --depth 1 -b humble https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup \
+>>>>>>> 4d0209d (make the agent image 4x smaller thanks to multi stage build (#90))
 &&  . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  apt update \
 &&  apt install -y ed python3-pip \
