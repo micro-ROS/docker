@@ -1,5 +1,7 @@
 FROM microros/base:humble
 
+SHELL ["/bin/bash", "-c"]
+
 WORKDIR /uros_ws
 
 RUN apt update \
@@ -13,4 +15,4 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh \
 
 # setup entrypoint
 COPY ./micro-ros_entrypoint.sh /
-ENTRYPOINT ["/bin/sh", "/micro-ros_entrypoint.sh"]
+ENTRYPOINT "/micro-ros_entrypoint.sh"
