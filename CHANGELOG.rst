@@ -2,6 +2,14 @@
 Changelog for package micro_ros_dockers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* make the agent image 4x smaller thanks to multi stage build (`#90 <https://github.com/micro-ROS/docker/issues/90>`_)
+* Use dos2unix to fix windows scripts format (`#86 <https://github.com/micro-ROS/docker/issues/86>`_) (`#87 <https://github.com/micro-ROS/docker/issues/87>`_)
+  (cherry picked from commit 797054d64c4dcbe22075b97bdfb7c1577c7c90ee)
+  Co-authored-by: Antonio Cuadros <49162117+Acuadros95@users.noreply.github.com>
+* Contributors: Dominik Nowak, mergify[bot]
+
 3.0.0 (2022-05-25)
 ------------------
 * Add humble to libgen
