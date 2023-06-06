@@ -1,4 +1,4 @@
-FROM microros/base:rolling AS micro-ros-agent-builder
+FROM microros/base:iron AS micro-ros-agent-builder
 
 WORKDIR /uros_ws
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
@@ -8,7 +8,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  ros2 run micro_ros_setup build_agent.sh \
 &&  rm -rf log/ build/ src/
 
-FROM ros:rolling-ros-core
+FROM ros:iron-ros-core
 
 COPY --from=micro-ros-agent-builder /uros_ws /uros_ws
 

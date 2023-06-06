@@ -13,10 +13,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - ros_distribution: foxy
-            branch: foxy
-          - ros_distribution: galactic
-            branch: galactic
+          - ros_distribution: humble
+            branch: humble
+          - ros_distribution: iron
+            branch: iron
           - ros_distribution: rolling
             branch: main
     steps:

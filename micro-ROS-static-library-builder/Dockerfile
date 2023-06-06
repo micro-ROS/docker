@@ -1,4 +1,4 @@
-FROM ros:rolling
+FROM ros:iron
 
 RUN mkdir -p uros_ws
 WORKDIR uros_ws
