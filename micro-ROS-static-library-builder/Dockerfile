@@ -26,7 +26,7 @@ RUN apt update \
     && rm -rf xtensa-esp32-elf-gcc8_4_0-esp-2021r2-linux-amd64.tar.gz
 
 # Install micro-ROS
-RUN git clone -b main https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-build \
+RUN git clone -b rolling https://github.com/micro-ROS/micro-ros-build.git src/micro-ros-build \
     &&  . /opt/ros/$ROS_DISTRO/setup.sh \
     &&  apt update \
     &&  apt install -y rsync python3-pip python3-nose clang-format pyflakes3 python3-mypy python3-pytest-mock gperf ros-$ROS_DISTRO-osrf-testing-tools-cpp python3-lttng ros-$ROS_DISTRO-mimick-vendor python3-babeltrace \
