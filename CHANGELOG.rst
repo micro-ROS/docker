@@ -2,6 +2,12 @@
 Changelog for package micro_ros_dockers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Iron release (`#95 <https://github.com/micro-ROS/docker/issues/95>`_)
+* make the agent image 4x smaller thanks to multi stage build (backport `#90 <https://github.com/micro-ROS/docker/issues/90>`_) (`#93 <https://github.com/micro-ROS/docker/issues/93>`_)
+* Use dos2unix to fix windows scripts format (`#86 <https://github.com/micro-ROS/docker/issues/86>`_)
+
 4.0.0 (2022-05-25)
 ------------------
 * Add Github Action for libgen (`#80 <https://github.com/micro-ROS/docker/issues/80>`_) (`#82 <https://github.com/micro-ROS/docker/issues/82>`_)
