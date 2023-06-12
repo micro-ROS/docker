@@ -2,6 +2,9 @@
 Changelog for package micro_ros_dockers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 3.0.1 (2023-06-06)
 ------------------
 * make the agent image 4x smaller thanks to multi stage build (`#90 <https://github.com/micro-ROS/docker/issues/90>`_)
