@@ -40,4 +40,4 @@ RUN git clone -b rolling https://github.com/micro-ROS/micro-ros-build.git src/mi
 
 COPY ./entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
