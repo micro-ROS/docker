@@ -37,5 +37,5 @@ jobs:
         with:
           context: ./micro-ROS-Agent/
           push: true
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           tags: microros/micro-ros-agent:${{ matrix.ros_distribution }}
