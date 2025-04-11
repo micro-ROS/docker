@@ -37,5 +37,5 @@ jobs:
         with:
           context: ./micro-ROS-static-library-builder/
           push: true
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           tags: microros/micro_ros_static_library_builder:${{ matrix.ros_distribution }}
