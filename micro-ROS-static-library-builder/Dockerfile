@@ -38,6 +38,10 @@ RUN git clone -b jazzy https://github.com/micro-ROS/micro-ros-build.git src/micr
     &&  rm -rf log/ build/ src/* \
     &&  rm -rf /var/lib/apt/lists/*
 
+RUN apt update \
+    && apt install -y --no-install-recommends crossbuild-essential-armel \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY ./entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
