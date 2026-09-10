@@ -1,14 +1,14 @@
-FROM microros/base:rolling AS micro-ros-agent-builder
+FROM ros:lyrical AS micro-ros-agent-builder
 
+ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /uros_ws
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
-&&  . install/local_setup.sh \
-&&  apt update \
-&&  ros2 run micro_ros_setup create_agent_ws.sh \
-&&  ros2 run micro_ros_setup build_agent.sh \
+&&  git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_msgs src/micro_ros_msgs \
+&&  git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro-ROS-Agent src/micro-ROS-Agent \
+&&  colcon build \
 &&  rm -rf log/ build/ src/
 
-FROM ros:rolling-ros-core
+FROM ros:lyrical-ros-core
 
 COPY --from=micro-ros-agent-builder /uros_ws /uros_ws
 
