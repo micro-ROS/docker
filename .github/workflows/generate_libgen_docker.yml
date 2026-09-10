@@ -19,6 +19,8 @@ jobs:
             branch: jazzy
           - ros_distribution: kilted
             branch: kilted
+          - ros_distribution: lyrical
+            branch: lyrical
           - ros_distribution: rolling
             branch: rolling
     steps:
